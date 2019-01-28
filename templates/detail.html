@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+<head>
+    <title>{{ book_detail.book_title }}</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="duokan"/>
+    <meta property="wb:webmaster" content="614a83f3edbfc3be"/>
+
+    <meta name="apple-itunes-app"
+          content="app-id=517850153, app-argument=duokan-reader://store/book/19af991492624e419d5696f8c749f582"/>
+
+
+    <meta name="keywords" content="{{ book_detail.keywords }}"/>
+    <meta name="description" content="{{ book_detail.description }}"/>
+    {% include 'head.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/book.css"/>
+</head>
+<body id="page-duokan-com" itemscope itemtype="http://schema.org/WebPage" class="xm-accounts">
+<noscript>请使用支持脚本的浏览器！</noscript>
+<div class="g-doc">
+    <header class="g-hd">
+        {% include 'div_head.html' %}
+    </header>
+
+    <div class="g-bd1">
+        <div class="u-nav-crumbs">
+            <span>当前位置：</span>
+            <a href="/" hidefocus="hidefocus">首页</a>
+            <span class="sep">&gt;</span>
+            <a href="/list/{{book_detail.classify}}" id='dkclassify' hidefocus="hidefocus">{{ book_detail.classify }}</a>
+            <span class="sep">&gt;</span>
+            <em>{{ book_detail.book_title }}</em>
+        </div>
+        <div class="g-wrap">
+            <div class="g-mn">
+                <div class="g-mnc">
+                    <div class="m-bookdata j-bookdata f-cb" itemscope itemtype="http://schema.org/Book">
+
+                        <div class="book-wrap">
+                            <a href="/detail/1/{{ book_detail.book_title }}" class="cover" hidefocus="hidefocus"
+                               target="_blank">
+                                <img src="{{ book_detail.book_img }}" alt="" ondragstart="return false;"
+                                     oncontextmenu="return false;" onload="onLoadImg(this)" style="display:none"/>
+                            </a>
+
+                        </div>
+                        <div class="desc">
+                            <h3>{{ book_detail.book_title }}</h3>
+
+
+                            <div class="u-stargrade" itemprop="aggregateRating" itemscope
+                                 itemtype="http://schema.org/AggregateRating">
+                                <div class="icon grade{{ book_detail.book_grade }}"></div>
+                                <em class="score" itemprop="ratingValue">{{ book_detail.book_score }}</em>
+                                <span class="num">( <span
+                                        itemprop="reviewCount">{{ book_detail.book_rating }}</span>个评分 )</span>
+                            </div>
+
+                            <div class="cnt">
+                                <div class="data">
+                                    <table>
+                                        <tr>
+                                            <td class="col0">作者：</td>
+                                            <td class="author" itemprop="author">{{ book_detail.book_author }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col0">版权：</td>
+                                            <td class="published"
+                                                itemprop="copyrightHolder">{{ book_detail.book_copyright }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col0">出版：</td>
+                                            <td itemprop="datePublished">{{ book_detail.book_datePublished }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+                                <div class="pay">
+                                    <div class="price">
+                                        <em>{{ book_detail.new_price }}</em>
+                                        <span class="u-sep">|</span>
+                                        <i>原价
+                                            <del>{{ book_detail.old_price }}</del>
+                                        </i>
+                                    </div>
+                                    <div class="act j-act f-cb" style="">
+                                        <a href="/verify"><span style="color: red">如果没有下载, 请等待5秒后可手动点击下载</span></a>
+                                        <div class="btn j-buyarea f-cb">
+                                            <img class="verify_code" src="{{ verify_images }}">
+                                            <form action="/detail/1/{{ book_detail.book_title }}">
+                                                <p>
+                                                    输入验证码获得下载链接:
+                                                    <label>
+                                                        <input name="verify_code" type="text"/>
+                                                    </label>
+                                                </p>
+                                                <input name="verify_code" type="submit" class="u-btn1" value="提交"/>
+                                            </form>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-bookdetail j-detail">
+                        <div class="u-nav-tab j-tab">
+                            <ul>
+                                <li class="itm {% if page_type=='1' %} crt {% endif %}"><a
+                                        href="/detail/1/{{ book_detail.book_title }}">简介</a>
+                                </li>
+
+                                <li class="u-sep">|</li>
+                                <li class="itm {% if page_type=='2' %} crt {% endif %}"><a
+                                        href="/detail/2/{{ book_detail.book_title }}">目录</a></li>
+
+                                <li class="u-sep">|</li>
+                                {#                                <li class="itm {% if page_type=='3' %} crt {% endif %}"><a#}
+                                {#                                        href="/detail/3/{{ book_detail.book_title }}">更多信息</a>#}
+                                {#                                </li>#}
+                            </ul>
+                            <!--29,122,215-->
+                            <div class="icn-arrow icn-arrow-top3 j-target"
+                                 style="left:{% if page_type=='1' %} 29{% elif page_type=='2' %}122{% elif page_type=='3' %}215{% endif %}px;">
+                                <span class="arrow0"></span>
+                                <span class="arrow1"></span>
+                            </div>
+                        </div>
+                        <section class="cnt j-cnt" {% if page_type!='1' %} style="display:none" {% endif %}>
+                            <article class="intro" id="book-content" hidefocus="hidefocus">
+
+                                {{ book_detail.book_content|safe }}
+                            </article>
+                            <div class="more" style="visibility:hidden;">
+                            </div>
+                        </section>
+
+                        <section class="cnt j-cnt">
+                            <article class="toc" {% if page_type!='2' %} style="display:none" {% endif %}>
+                                {#                                <ol>#}
+                                {##}
+                                {#                                    {% for brief in brief_list %}#}
+                                {#                                        <li class="">#}
+                                {#                                            <h3 class="title">{{ brief.brief_title }}</h3>#}
+                                {#                                            <div class="brief brief0"><p>#}
+                                {#                                                {{ brief.brief_detail }}</p></div>#}
+                                {#                                        </li>#}
+                                {#                                    {% endfor %}#}
+                                {##}
+                                {#                                </ol>#}
+                                {{ book_detail.book_catalogue|safe }}
+                            </article>
+                        </section>
+
+                        {#                        <section class="cnt j-cnt" {% if page_type!='3' %} style="display:none" {% endif %}>#}
+                        {#                            <article class="data">#}
+                        {#                                <ul>#}
+                        {##}
+                        {#                                    <li>作者：<span class="u-author"><span itemprop="author">都梁</span></span></li>#}
+                        {##}
+                        {##}
+                        {#                                    <li>字数：<span class="size">37.1万字</span></li>#}
+                        {##}
+                        {##}
+                        {#                                    <li>大小：<span class="size">1.44MB</span></li>#}
+                        {##}
+                        {##}
+                        {#                                    <li>书号：<span class="isbn" itemprop="isbn">978-7-5502-3495-6</span></li>#}
+                        {##}
+                        {##}
+                        {#                                    <li>出版：<span itemprop="datePublished">2017-09-01</span></li>#}
+                        {##}
+                        {##}
+                        {#                                    <li class="updated f-cb">#}
+                        {#                                        <label>更新：</label><span class="date" itemprop="dateModified">2018-11-15</span>#}
+                        {##}
+                        {#                                    </li>#}
+                        {##}
+                        {#                                </ul>#}
+                        {#                            </article>#}
+                        {#                        </section>#}
+                    </div>
+                    <div id="hot-comment">
+                        <section class="m-comm j-comment" style="" id="new-comment">
+                            <h3 class="ttl"><a>最新评论</a></h3>
+                            <div class="u-nav-tab j-tab" style="display:none">
+                                <ul>
+                                    <li class="itm crt"><a
+                                            onclick="_hmt.push(['_trackEvent', 'book_detail_page', 'comment_hot'])"
+                                            href="javascript:void(0);" class="crt">最热</a></li>
+                                    <li class="u-sep">|</li>
+                                    <li class="itm"><a
+                                            onclick="_hmt.push(['_trackEvent', 'book_detail_page', 'comment_new'])"
+                                            href="javascript:void(0);">最新</a></li>
+                                </ul>
+                                <div class="icn-arrow icn-arrow-top3 j-target" style="left: 22px;">
+                                    <span class="arrow0"></span>
+                                    <span class="arrow1"></span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+            <div class="g-sd">
+                <section class="m-recommend j-recommend-page">
+                    <div class="u-ttl1"><h4>买过此书的人还买过</h4></div>
+                    <div class="cnt">
+                        <ul>
+                            {% for book_detail in book_list %}
+                                <li class="u-bookitm2 j-bookitm" data-id="{{ book_detail.book_id }}">
+                                    <div class="book">
+                                        <a href="/detail/1/{{ book_detail.book_title }}" class="cover"
+                                           hidefocus="hidefocus"
+                                           target="_blank">
+                                            <img src="{{ book_detail.book_img }}" alt=""
+                                                 ondragstart="return false;"
+                                                 oncontextmenu="return false;" onload="onLoadImg(this)"
+                                                 style="display:none"/>
+                                        </a>
+                                    </div>
+                                    <div class="info">
+                                        <a href="/detail/1/{{ book_detail.book_title }}" class="title"
+                                           hidefocus="hidefocus"
+                                           target="_blank">{{ book_detail.book_title }}</a>
+                                        <div class="u-author">
+                                            <span>{{ book_detail.book_author }}</span>
+                                        </div>
+                                        <div class="u-price">
+                                            <em>{{ book_detail.new_price }} </em>
+                                            <del>{{ book_detail.old_price }}</del>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+    <footer class="g-ft">{% include "footer.html" %}</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>单点登录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/css/login.css" media="all"/>
+    <link rel="stylesheet" href="/static/css/layui.css" media="all"/>
+    <!-- 此段必须要引入 t为小时级别的时间戳 -->
+    <link type="text/css" href="/static/css/nc.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/javascript/nc.js"></script>
+    <!-- 引入结束 -->
+</head>
+<body class="bg-img">
+<!-- 此段必须要引入 -->
+<div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
+<!-- 引入结束 -->
+<div class="logo-container">
+    <img class="logo-icon" src="/static/htmlimg/logo.png" alt="">
+</div>
+<section class="login-outer">
+    <div class="layui-tab layui-tab-brief log-container">
+        <ul class="layui-tab-title">
+            <li class="layui-this">手机动态码登录</li>
+        </ul>
+        <div class="layui-tab-content top-padding">
+            <form class="layui-tab-item layui-show layui-form" action="" method="post">
+                <div class='form-item'>
+                    <input type="text" name="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input mid-font"
+                           autocomplete="on" lay-verify="phone" id="phoneNum" value=>
+                </div>
+                <div class="form-item">
+                    <div id="dom_id"></div>
+                </div>
+                <input type='hidden' id='csessionid' name='csessionid'/>
+                <input type='hidden' id='sig' name='sig'/>
+                <input type='hidden' id='token' name='token'/>
+                <input type='hidden' id='scene' name='scene'/>
+                <div class="form-item active-code">
+                    <div class="layui-inline code-block">
+                        <input id="code" type="text" name="code" placeholder="动态码" autocomplete="off"
+                               class="layui-input mid-font" lay-verify="code">
+                    </div>
+                    <input type='button'
+                           class="layui-btn layui-btn-primary layui-btn-disabled btn-block"
+                           id="checkCode" disabled value="获取验证码"/>
+                </div>
+                <div class="form-item">
+                    <!--<input type="checkbox" name="" title=""" lay-skin="primary" checked>-->
+                </div>
+                <div class="form-item">
+                    <button class="layui-btn btn-color btn-width" lay-submit="" lay-filter="phone">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<footer class="platform">
+    SSO统一认证平台
+</footer>
+</body>
+<script src="/static/javascript/layui.js"></script>
+<script>
+    layui.use(['element', 'form', 'jquery', 'layer'], function () {
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+            
+        /**
+         * 倒计时
+         */
+        var timer = 60;
+    var nc = new noCaptcha();
+    var nc_appkey = 'FFFF00000000017A103E';  // 应用标识,不可更改
+    var nc_scene = 'login';  //场景,不可更改
+    var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
+    var nc_option = {
+        renderTo: '#dom_id',//渲染到该DOM ID指定的Div位置
+        appkey: nc_appkey,
+        scene: nc_scene,
+        token: nc_token,
+        callback: function (data) {// 校验成功回调
+            console.log(data.csessionid);
+            console.log(data.sig);
+            console.log(nc_token);
+
+            document.getElementById('csessionid').value = data.csessionid;
+            document.getElementById('sig').value = data.sig;
+            document.getElementById('token').value = nc_token;
+            document.getElementById('scene').value = nc_scene;
+            var btn = $('#checkCode');
+            var phone = $('#phoneNum');
+            if ($('#phoneNum').val().length === 11) {
+                bindCheckcode();
+            }
+        }
+    };
+    nc.init(nc_option);
+function get_sms_code(){
+    var phonenumber = $.trim($("input[name=phone]").val());
+    var csessionid = $.trim($("input[name=csessionid]").val());
+    var sig = $.trim($("input[name=sig]").val());
+    var token = $.trim($("input[name=token]").val());
+    var scene = $.trim($("input[name=scene]").val());
+    $.post("/sso/get_sms_code", {"phonenumber":phonenumber, "csessionid":csessionid, "sig":sig, "token":token, "scene":scene}, function(json){
+        if (json){
+            layer.msg(json, {icon: 5});
+        }
+    });
+}
+        /**
+         * 前端校验
+         * @param val
+         */
+        form.verify({
+            username: function (val) {
+                if (val.length < 1) {
+                    return '账号不能为空'
+                }
+            },
+            password: function (val) {
+                if (val.length < 6) {
+                    return '密码长度至少为6位'
+                }
+            },
+            phone: function (val) {
+                if (val.length !== 11) {
+                    return '输入正确的手机号码'
+                }
+            },
+            code: function (val) {
+                if (val.length !== 4) {
+                    return '输入正确的动态码'
+                }
+            }
+        });
+
+        /**
+         * 定时器
+         * @param data
+         */
+        function setTimer() {
+            var intervalTimer = setInterval(function () {
+                var checkBtn = $('#checkCode');
+                console.log(checkBtn.val());
+                if (timer === 0 || timer < 0) {
+                    clearInterval(intervalTimer);
+                    checkBtn.removeAttr('disabled');
+                    checkBtn.removeClass('layui-btn-disabled');
+                    checkBtn.val('获取动态码');
+                    timer = 60;
+                } else {
+                    checkBtn.prop('disabled', 'disabled');
+                    checkBtn.addClass('layui-btn-disabled');
+                    checkBtn.val('重新发送(' + timer + ')');
+                    timer -= 1;
+                }
+            }, 1000)
+        }
+        /**
+         * 按钮可用控制
+         */
+        function disableBtn() {
+            var btn = $('#checkCode');
+            var phone = $('#phoneNum');
+            if (phone.val().length === 11 && $('#csessionid').val()) {
+                bindCheckcode();
+            }
+            phone.bind('input porpertychange', function () {
+                    console.log($('#csessionid').val())
+                if (phone.val().length === 11 && $('#csessionid').val()) {
+                    bindCheckcode();
+                } else {
+                    btn.prop('disabled', 'disabled');
+                    btn.addClass('layui-btn-disabled');
+                }
+            })
+        }
+
+         /**
+         * 获取动态码事件绑定
+         */
+        function bindCheckcode() {
+            var btn = $('#checkCode');
+            btn.off(); // 解绑
+            btn.removeAttr('disabled');
+            btn.removeClass('layui-btn-disabled');
+            $('#checkCode').on('click', function () {
+                get_sms_code();
+                timer = 60;
+                setTimer();
+            });
+        }
+        disableBtn();
+    })
+</script>
+</html>

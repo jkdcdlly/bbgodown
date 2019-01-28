@@ -1,0 +1,51 @@
+<div class="m-sitenav">
+    <div class="wrap">
+        <div class="m-miprdct">
+            <ul class="list">
+                <li><a href="" target="_blank">bbgo下载网</a></li>
+                <li class="u-sep">|</li>
+                <li><a href="" target="_blank">bbgo游戏网</a></li>
+{#                <li class="u-sep">|</li>#}
+{#                <li><a href="" target="_blank">米聊</a></li>#}
+{#                <li class="u-sep">|</li>#}
+{#                <li><a href="" target="_blank">游戏</a></li>#}
+{#                <li class="u-sep">|</li>#}
+{#                <li><a href="" class="crt">多看阅读</a></li>#}
+{#                <li class="u-sep">|</li>#}
+{#                <li><a href="" target="_blank">云服务</a></li>#}
+{#                <li class="u-sep">|</li>#}
+{#                <li><a href="" target="_blank">小米网移动版</a></li>#}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="m-header">
+    <div class="wrap">
+        <div class="m-logo"><a href="/" title="" hidefocus="hidefocus"></a></div>
+        <div class="u-search">
+            <div class="form">
+                <span class="txt" style="">搜索书名或作者...</span>
+                <input type="text" id="dk-text" class="text" spellcheck="false" autocapitalize="off"
+                       autocomplete="off" autocorrect="off" hidefocus="hidefocus"/>
+                <span title="" class="icn-search2" id="searchbotton"></span>
+            </div>
+            <div class="list" style="visibility:hidden;"></div>
+        </div>
+    </div>
+
+    <nav class="m-nav">
+        <ul class="f-cb" itemprop="breadcrumb">
+            <li id="index"{% if request.path=='/' %} class="crt" {% endif %}><a href="/" hidefocus="hidefocus">首页</a>
+            </li>
+            <li id="rank" {% if request.path=='/list' %} class="crt" {% endif %}><a href="/list" hidefocus="hidefocus">书单</a>
+            </li>
+            {#            <li id="review" class=""><a href="" hidefocus="hidefocus">书评</a></li>#}
+            {#            <li id="bargain" class=""><a href="" hidefocus="hidefocus">精品<span class="u-dot">&#183;</span>免费</a>#}
+            {#            </li>#}
+            {#            <li id="category" class=""><a href="" hidefocus="hidefocus">分类</a></li>#}
+            {#            <li><a href="" target="_blank" hidefocus="hidefocus">客户端</a></li>#}
+            {#            <li><a href="" target="_blank" hidefocus="hidefocus">论坛</a></li>#}
+        </ul>
+    </nav>
+
+</div>

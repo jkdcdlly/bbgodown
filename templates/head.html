@@ -1,0 +1,36 @@
+<link type="text/css" rel="stylesheet" href="/static/css/global.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
+<!--[if IE 6]><script type="text/javascript">document.execCommand("BackgroundImageCache", false, true);</script>
+    <![endif]-->
+<!--[if IE 6]><script type="text/javascript">location.href='/ie6';</script><![endif]-->
+<!--[if IE]><script src="/static/javascript/html5.js"></script><![endif]-->
+<script src="/static/javascript/sea.js"></script>
+<script>
+    // FIXME 临时解决方案
+    window.onLoadImg = function (evt) {
+        evt.style.display = 'block'
+    };
+    window.closeNick = false;
+    // error log
+    if (location.host.indexOf('www') == 0 || !0) {
+        var ERROR_URL = 'http://clientstat.duokan.com/d.gif';
+
+        function logError(sev, msg) {
+            var img = new Image();
+            img.src = ERROR_URL + '?sev=' + encodeURIComponent(sev) + '&msg=' + encodeURIComponent(msg);
+        }
+
+        window.onerror = function (msg, url, line) {
+            var _msg = '{"msg":"' + msg + '","u":"' + url + '","line":"' + line + '"}';
+            logError('global', _msg);
+            return false;
+        };
+    }
+</script>
+
+
+
+<!--[if lte IE 8.0]>
+<script src="/static/javascript/media.js"></script>
+<script src="/static/javascript/respond.src.js"></script>
+<![endif]-->

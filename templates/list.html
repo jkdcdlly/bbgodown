@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+<head>
+    <title>bbgo下载(bbgo321.com) - 海量畅销电子书免费下载，数百万读者阅读首选</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="bbgo321"/>
+    <meta property="wb:webmaster" content="614a83f3edbfc3be"/>
+
+    <meta name="apple-itunes-app" content="app-id=517850153"/>
+    <link rel="apple-touch-icon" href="/static/touch-icon-iphone-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/touch-icon-ipad-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/touch-icon-iphone-retina-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/touch-icon-ipad-retina-precomposed.png"/>
+
+
+    <meta name="keywords" content="bbgo,bbgo下载,电子书下载,电子书,免费电子书"/>
+    <meta name="description"
+          content="提供精品正版电子书免费下载和购买；支持Android、iPhone、iPad、Kindle等多种设备。享受精品阅读时光。好书，你值得多看。"/>
+
+    {% include 'head.html' %}
+</head>
+<body id="page-duokan-com" itemscope itemtype="http://schema.org/WebPage" class="xm-accounts">
+<noscript>请使用支持脚本的浏览器！</noscript>
+<div class="g-doc">
+    <header class="g-hd">
+        {% include 'div_head.html' %}
+    </header>
+
+    <div class="g-bd2 g-bd2-1">
+        <div class="g-mn">
+            <div class="g-mnc">
+                <div class="m-rankarea j-rankarea f-cb">
+                    <h2 class="u-ttl1">精品推荐</h2>
+                    <div class="u-colslist1 ">
+                        <ul class="j-list">
+                            {% for book_detail in book_list %}
+
+                                <li class="u-bookitm1 j-bookitm" data-id="37b321b8cbb447749dbba700e5cb9d3e">
+                                    <em class="rnum hot">1.</em>
+                                    <div class="book" data-id="37b321b8cbb447749dbba700e5cb9d3e">
+
+                                        <a href="/detail/1/{{ book_detail.book_title }}" class="cover"
+                                           hidefocus="hidefocus"
+                                           target="_blank">
+
+                                            {#                                            <img src="/static/htmlimg/smLm2GQU7jtrvn.jpg!l" alt=""#}
+                                            <img src="{{ book_detail.book_img }}" alt=""
+                                                 ondragstart="return false;" oncontextmenu="return false;"
+                                                 onload="onLoadImg(this)"
+                                                 style="display:none"/>
+                                        </a>
+                                        <div class="buy-status j-price">
+                                            <div class="u-price">
+                                                <em>{{ book_detail.new_price }} </em>
+                                                <del>{{ book_detail.old_price }}</del>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="wrap">
+                                            <a href="/detail/1/{{ book_detail.book_title }}" class="title"
+                                               hidefocus="hidefocus"
+                                               target="_blank">{{ book_detail.book_title }}</a>
+                                            <div class="u-stargrade" itemprop="aggregateRating" itemscope
+                                                 itemtype="http://schema.org/AggregateRating">
+                                                <div class="icon grade7"></div>
+                                                <span class="num" itemprop="ratingValue">( 5 )</span>
+                                            </div>
+                                            <div class="u-author">
+
+                                                <span>{{ book_detail.authors }}</span>
+
+
+                                            </div>
+                                            <p class="desc">世界通史领域的开山大作，透视全球的文明兴衰和历史进程！</p>
+                                        </div>
+                                        <a style="width:110px;background:none;box-shadow:none;display:none" href=""
+                                           class="active_46 u-btn j-buy" hidefocus="hidefocus">书券免费兑换</a>
+                                        <a style="margin-top:15px;width:110px;background:none;box-shadow:none;display:none;color:#999;font-size:14px;"
+                                           href="" class="active_46_none" hidefocus="hidefocus">暂无可用书券</a>
+
+
+                                        <div class="act j-act">
+                                        <span class="j-act" style="visibility:hidden">
+
+                                        <a href="" class="icn-cart j-cart" hidefocus="hidefocus" title=""></a>
+                                        <span></span>
+                                        <span class="icn-cart-chk" title="" style="display:none"></span>
+
+                                        <a class="icn-heart j-fav" href="" hidefocus="hidefocus"></a>
+                                        <span class="icn-heart-chk" style="display:none" title=""></span>
+                                        <a class="icn-quan j-coupon" href="" style="display:none"></a>
+                                        </span>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+
+                    <div class="m-page j-pager">
+                        <div class="u-page-go">
+                            <span>去第</span><label>
+                            <input type="text" class="txt j-input" value=""/>
+                        </label><span>页</span>
+                            <span>共4页</span>
+                            <a href="" class="btn j-confirm">确定</a>
+                        </div>
+                        <div class="u-page">
+                            <a href="" class="pre init" hidefocus="hidefocus">上一页</a>
+                            <ul id="bookpage-a">
+
+                                <li class="crt">
+
+                                    <a href="" hidefocus="hidefocus">1</a>
+
+                                </li>
+
+                                <li class="">
+
+                                    <a href="" hidefocus="hidefocus">2</a>
+
+                                </li>
+
+                                <li class="">
+
+                                    <a href="" hidefocus="hidefocus">3</a>
+
+                                </li>
+
+                            </ul>
+                            <a href="" class="next " hidefocus="hidefocus">下一页</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="g-sd">
+
+            <div class="u-nav-stacked">
+                <h2>精品免费</h2>
+                <ul>
+                    <li {% if not classify %} class="crt" {% endif %}><a href="/list">精品推荐</a></li>
+                    {% for book in classifys %}
+                        <li {% if book.distinctclassify==classify %} class="crt" {% endif %}><a href="/list/{{ book.distinctclassify }}">{{ book.distinctclassify }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="u-fbox js-fixed" style="display:none">
+        <a href="" class="gotop" hidefocus="hidefocus">
+            <div class="icn-arrow">
+                <span class="arrow0"></span><span class="arrow1"></span>
+            </div>
+            <span class="cnt">顶部</span>
+        </a>
+    </div>
+    <footer class="g-ft">
+        {% include "footer.html" %}
+    </footer>
+</div>
+</body>
+</html>

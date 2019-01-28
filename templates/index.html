@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>bbgo下载(bbgo321.com) - 海量畅销电子书免费下载，数百万读者阅读首选</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="bbgo321"/>
+    <meta property="wb:webmaster" content="614a83f3edbfc3be"/>
+
+    <meta name="apple-itunes-app" content="app-id=517850153"/>
+    <link rel="apple-touch-icon" href="/static/touch-icon-iphone-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/touch-icon-ipad-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/touch-icon-iphone-retina-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/touch-icon-ipad-retina-precomposed.png"/>
+
+
+    <meta name="keywords" content="bbgo,bbgo下载,电子书下载,电子书,免费电子书"/>
+    <meta name="description"
+          content="提供精品正版电子书免费下载和购买；支持Android、iPhone、iPad、Kindle等多种设备。享受精品阅读时光。好书，你值得多看。"/>
+    {% include 'head.html' %}
+
+    <link type="text/css" rel="stylesheet" href="/static/css/index.css"/>
+
+</head>
+<body id="page-duokan-com" itemscope itemtype="http://schema.org/WebPage" class="xm-accounts">
+<noscript>请使用支持脚本的浏览器！</noscript>
+<div class="g-doc">
+    <header class="g-hd">
+        {% include 'div_head.html' %}
+
+    </header>
+
+
+    <div class="g-bd2">
+        <div class="g-mn">
+            <div class="g-mnc">
+                <div class="m-recommend" id="module-recommend">
+                    <div class="u-ttl"><h5>精品推荐</h5>
+                        <div class="act"><a href="/list" class="u-more">查看更多<span class="arr">&gt;&gt;</span></a></div>
+                    </div>
+
+
+                    <div class="u-colslist">
+                        <ul>
+                            {% for book in book_list %}
+                                <li class="u-bookitm0 j-bookitm" data-id="{{ book.book_id }}">
+                                    <div class="book">
+                                        <a href="/detail/1/{{ book.book_title }}" class="cover" hidefocus="hidefocus"
+                                           target="_blank">
+                                            <img src="{{ book.book_img }}" alt=""
+                                                 ondragstart="return false;"
+                                                 oncontextmenu="return false;" onload="onLoadImg(this)"
+                                                 style="display:none"/>
+                                        </a>
+
+                                        <a href="/detail/1/{{ book.book_title }}" class="title" hidefocus="hidefocus"
+                                           target="_blank">{{ book.book_title }}</a>
+                                    </div>
+                                    <div class="info">
+                                        <div class="u-stargrade" itemprop="aggregateRating" itemscope
+                                             itemtype="http://schema.org/AggregateRating">
+                                            <div class="icon grade{{ book.book_grade }}"></div>
+                                            <span class="num" itemprop="ratingValue">(1535)</span>
+                                        </div>
+                                        <div class="u-author">
+                                            <span>{{ book.book_author }}</span>
+                                        </div>
+                                        <div class="u-price">
+                                            <em>{{ book.new_price }} </em>
+                                            <del> {{ book.old_price }}</del>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="g-sd">
+            <div class="m-rank j-rank">
+                <div class="u-nav-tab j-rank-tab">
+                    <ul>
+                        <li class="itm {% if page_type=='1' %} crt {% endif %}"><a href="/index/1">畅销榜</a></li>
+                        <li class="sep">|</li>
+                        <li class="itm {% if page_type=='2' %} crt {% endif %}"><a href="/index/2">月度榜</a></li>
+                        <li class="sep">|</li>
+                        <li class="itm {% if page_type=='3' %} crt {% endif %}"><a href="/index/3">好评榜</a></li>
+                    </ul>
+                    <!--19,92,165-->
+                    <div class="icn-arrow icn-arrow-top3 j-target"
+                         style="left:{% if page_type=='1' %} 19{% elif page_type=='2' %}92{% elif page_type=='3' %}165{% endif %}px;">
+                        <span class="arrow0"></span>
+                        <span class="arrow1"></span>
+                    </div>
+                </div>
+
+
+                <div class="cnt j-cnt" {% if page_type!='1' %} style="display:none" {% endif %}>
+
+                    <ul class="u-txtlst">
+                        {% for book in bestseller_list %}
+                            <li class="itm itm-img">
+                                <em class="hot">{{ loop.index }}.</em>
+                                <a href="/detail/1/{{ book.book_title }}" hidefocus="hidefocus" title="" class="title"
+                                   target="_blank">{{ book.book_title }}</a>
+                                <p class="u-author">
+                                    <span>{{ book.book_author }}</span>
+                                </p>
+
+                            </li>
+                        {% endfor %}
+
+
+                    </ul>
+
+                </div>
+
+
+                <div class="cnt j-cnt" {% if page_type!='2' %} style="display:none" {% endif %}>
+
+                    <ul class="u-txtlst">
+
+                        {% for book in bestseller_list_m %}
+                            <li class="itm">
+                                <em class="hot">{{ loop.index }}.</em>
+                                <a href="/detail/1/{{ book.book_title }}" title="" class="title" hidefocus="hidefocus"
+                                   target="_blank">{{ book.book_title }}</a>
+                                <p class="u-author">
+                                    <span>{{ book.book_author }}</span>
+                                </p>
+                            </li>
+                        {% endfor %}
+
+
+                    </ul>
+
+                </div>
+
+
+                <div class="cnt j-cnt" {% if page_type!='3' %} style="display:none" {% endif %}>
+
+                    <ul class="u-txtlst">
+
+                        {% for book in best_comment_list %}
+                            <li class="itm">
+                                <em class="hot">{{ loop.index }}.</em>
+                                <a href="/detail/1/{{ book.book_title }}" title="" class="title" hidefocus="hidefocus"
+                                   target="_blank">{{ book.book_title }}</a>
+                                <p class="u-author">
+                                    <span>{{ book.book_author }}</span>
+                                </p>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <footer class="g-ft">{% include "footer.html" %}</footer>
+
+</div>
+
+
+</body>
+</html>

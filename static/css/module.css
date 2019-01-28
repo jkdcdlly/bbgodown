@@ -1,0 +1,66 @@
+/* 公司简介  */
+.m-corpinfo{padding-bottom:20px;font-size:14px;line-height:24px;}
+.m-corpinfo h2{margin-bottom:10px;font-size:30px;font-weight:400;line-height:60px;color:#333;}
+.m-corpinfo h3{font-size:18px;line-height:36px;color:#333;}
+.m-corpinfo p{margin-bottom:10px;text-indent:2em;}
+.m-corpinfo article{padding-bottom:20px;color:#666;}
+.m-corpinfo a{color:#ed6c00;}
+.m-corpinfo .map{height:305px;width:800px;margin:60px auto 30px;border:6px solid #fff;background:url(../image/about_contact_01.jpg)}
+.m-corpinfo__pic {width:100px;display:block;margin-left:45px;margin-bottom:5px;margin-top:-18px;}
+/* 搜 */
+.m-search{min-height:500px;_height:500px;}
+.m-search .u-ttl3{height:40px;line-height:40px;font-size:14px;margin-bottom:16px;}
+.m-search .u-ttl3 em{margin:0 5px;color:#ed6c00;}
+.m-search .u-msg2{width:500px;margin:100px auto;}
+/* 分类浏览页面目录 */
+.m-category .u-nav-crumbs,.m-category .u-nav-tab{margin-left:45px;}
+.m-category .u-nav-crumbs{padding:8px 0;}
+.m-category .u-nav-tab{margin-bottom:30px;}
+.m-category .u-nav-tab li{width:64px;}
+.m-category .u-nav-tab ul,.m-category .u-filter-price{float:left;}
+.m-category .u-nav-tab ul{margin-right:10px;}
+.m-category .u-aimg{margin-left:45px;margin-bottom:10px;padding:25px 30px 0;}
+.m-category .u-aimg li{width:33.3%;}
+.m-category .cnt{min-height:620px;}
+.m-category-nav li{position:relative;zoom:1;margin-top:-1px;}
+.m-category-nav li a{display:block;padding-left:28px;padding-right:50px;margin:0;border:0;font-size:14px;}
+.m-category-nav li .wrap{padding:9px 0;margin-right:18px;border-bottom: 1px dashed #e2dcd7;}
+.m-category-nav .crt{padding:0;}
+.m-category-nav .all a{padding-left:15px;}
+.m-category-nav li .checked{padding-bottom:10px;margin:0;color:#ed6c00;background-color:#f4f2ef;border-right:4px solid #ed6c00;border-bottom:0;}
+.m-category-nav .level2 a{padding-left:36px;}
+.m-category-nav .crt .level2{display:block;}
+.m-category-nav .back b{position:absolute;left:4px;top:14px;width:5px;height:9px;background-position:-219px -50px;}
+.m-category-nav .level1 .back b{left:18px;}
+.m-category-nav .num{position:absolute;top:9px;right:18px;color:#a99a8f;font-size:11px;font-weight:400;font-family:Tahoma;}
+.m-category-ad{width:212px;margin-top:40px;}
+.m-category-ad .u-aimg{width:206px;height:auto;margin:0 auto;padding-top:20px;}
+.m-category-ad .u-aimg a,.m-category-ad .u-aimg img{width:200px;height:108px;background:none;}
+.m-category-ad .u-aimg li{width:206px;}
+.m-category-ad .u-aimg a{padding-bottom:12px;}
+/* 榜单&精品 */
+.m-rankarea .u-ttl1{padding:0 0 20px 45px;line-height:48px;font-weight:400;}
+.m-rankarea .u-ttl{height:48px;line-height:48px;padding:0;margin-bottom:0;}
+.m-rankarea .u-ttl h2,.m-rankarea .u-ttl1 h2{font-weight:400;}
+.m-rankarea .u-ttl .act{right:5px;}
+.m-rankarea .u-txtlst .itm{padding:12px 130px 12px 34px;line-height:30px;border-bottom:1px solid #e0dad5;}
+.m-rankarea .u-txtlst .itm .title{width:100%;font-size:14px;}
+.m-rankarea .u-txtlst .final{border:0;}
+.m-rankarea .u-txtlst-1 .u-author{position:absolute;top:20px;right:0;text-align:right;color:#999;}
+.m-rankarea .u-txtlst-1 .itm em{top:18px;width:26px;font-size:16px;}
+.m-rankarea .ritm{float:left;width:434px;padding:0 0 20px 45px;}
+
+.u-filter-price{height:24px;line-height:24px;padding-top:8px;}
+.u-filter-price .ipt{width:40px;height:22px;background:#fff;border:1px solid #e0dad5;padding:0 2px;text-align:center;}
+.u-filter-price .u-txtbx,.u-filter-price .sep,.u-filter-price .u-btn3{float:left;}
+.u-filter-price .u-txtbx .txt{display:block;width:46px;height:24px;line-height:24px;top:0;left:0;text-align:center;color:#dbd4cd;font-size:12px;}
+.u-filter-price .u-btn1{height:24px;margin-left:5px;font-size:12px;padding:0;width:3em;}
+.u-filter-price .sep{color:#dbd4cd;font-family:'arial';margin:0 4px;}
+
+@media all and (max-width:1200px){
+  .m-rankarea h1{padding-left:40px;}
+  .m-rankarea .ritm{width:334px;padding-left:40px;}
+  .m-rankarea .u-txtlist .itm{padding-right:120px;}
+  .m-rankarea .u-txtlist-1 .itm .author{width:120px;}
+  .m-category .u-aimg{margin-bottom:10px;padding:25px 0 0;}
+  }

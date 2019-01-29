@@ -96,7 +96,7 @@ def list2(cur_page_num='1', cur_classify=''):
     skip_num = (int(cur_page_num) - 1) * page_size
     if cur_classify != '':
         sql = book_list_sql_filter.format(classify=cur_classify, skip_num=skip_num, page_size=page_size)
-        count_sql = book_count_sql.format(classify=cur_classify)
+        count_sql = book_count_sql_filter.format(classify=cur_classify)
     else:
         sql = book_list_sql.format(skip_num=skip_num, page_size=page_size)
         count_sql = book_count_sql

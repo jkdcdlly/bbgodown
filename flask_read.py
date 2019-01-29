@@ -23,6 +23,8 @@ bestseller_list_sql = "select book_title, book_author from book_desc limit 10"
 best_comment_list_sql = "select book_title, book_author from book_desc limit 10"
 best_seller_list_sql = "select book_title, book_author from book_desc limit 10"
 
+page_size = 1
+
 
 def res_2_dict(res, sql):
     col_str = sql[7:sql.index("from")].strip()
@@ -40,7 +42,7 @@ def res_2_dict(res, sql):
 @app.route('/index/<page_type>')
 @app.route('/')
 def index(page_type='1'):
-    list_sql = book_list_sql.format(skip_num=0, page_size=20)
+    list_sql = book_list_sql.format(skip_num=0, page_size=page_size)
     book_list = res_2_dict(query(list_sql), list_sql)
     bestseller_list = res_2_dict(query(bestseller_list_sql), bestseller_list_sql)
     best_comment_list = res_2_dict(query(best_comment_list_sql), best_comment_list_sql)
@@ -57,7 +59,7 @@ def detail(page_type, book_title):
     title = "亮剑【 PDF免费下载 】"
     book_detail_sql2 = book_detail_sql.format(book_title=book_title)
     book_detail = res_2_dict(query(book_detail_sql2), book_detail_sql2)[0]
-    list_sql = book_list_sql.format(skip_num=0, page_size=20)
+    list_sql = book_list_sql.format(skip_num=0, page_size=page_size)
     book_list = res_2_dict(query(list_sql), list_sql)
 
     # comment_list = [
@@ -90,19 +92,15 @@ def bangdan():
 
 @app.route('/list/<cur_page_num>/')
 @app.route('/list/<cur_page_num>/<cur_classify>/')
-def list2(cur_page_num=1, cur_classify=''):
-    page_size = 10
-    print("========================")
-    print(type(cur_page_num))
-    print(cur_page_num)
-    print("========================")
-    skip_num = (1 - 1) * page_size
+def list2(cur_page_num='1', cur_classify=''):
+    skip_num = (int(cur_page_num) - 1) * page_size
     if cur_classify != '':
         sql = book_list_sql_filter.format(classify=cur_classify, skip_num=skip_num, page_size=page_size)
         count_sql = book_count_sql.format(classify=cur_classify)
     else:
         sql = book_list_sql.format(skip_num=skip_num, page_size=page_size)
         count_sql = book_count_sql
+    app.logger.debug(sql)
     book_list = res_2_dict(query(sql), sql)
     # 分类
     classifys = res_2_dict(query(book_classify_sql), book_classify_sql)
@@ -112,7 +110,7 @@ def list2(cur_page_num=1, cur_classify=''):
     import math
 
     total_page_num = math.ceil(int(total[0]["book_num"]) / page_size)
-    print("total_page_num=====",total_page_num)
+    print("total_page_num=====", total_page_num)
     return render_template(
         'list.html',
         book_list=book_list,
@@ -120,6 +118,8 @@ def list2(cur_page_num=1, cur_classify=''):
         cur_classify=cur_classify,
         total_page_num=int(total_page_num),
         cur_page_num=int(cur_page_num),
+        xianshi_page_num1=2 if int(cur_page_num) < 4 else int(cur_page_num) - 2,
+        xianshi_page_num2=total_page_num if int(cur_page_num) + 3 >= total_page_num else int(cur_page_num) + 3,
         pre_page_num=1 if int(cur_page_num) == 1 else int(cur_page_num) - 1,
         next_page_num=int(total_page_num) if int(cur_page_num) == total_page_num else int(cur_page_num) + 1,
     )

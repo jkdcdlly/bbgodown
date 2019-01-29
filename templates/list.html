@@ -41,7 +41,7 @@
                                     <em class="rnum hot">1.</em>
                                     <div class="book" data-id="37b321b8cbb447749dbba700e5cb9d3e">
 
-                                        <a href="/detail/1/{{ book_detail.book_title }}" class="cover"
+                                        <a href="/detail/1/{{ book_detail.book_title }}/" class="cover"
                                            hidefocus="hidefocus"
                                            target="_blank">
 
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="info">
                                         <div class="wrap">
-                                            <a href="/detail/1/{{ book_detail.book_title }}" class="title"
+                                            <a href="/detail/1/{{ book_detail.book_title }}/" class="title"
                                                hidefocus="hidefocus"
                                                target="_blank">{{ book_detail.book_title }}</a>
                                             <div class="u-stargrade" itemprop="aggregateRating" itemscope
@@ -108,33 +108,44 @@
                             <span>去第</span><label>
                             <input type="text" class="txt j-input" value=""/>
                         </label><span>页</span>
-                            <span>共4页</span>
+                            <span>共{{ total_page_num }}页</span>
                             <a href="" class="btn j-confirm">确定</a>
                         </div>
                         <div class="u-page">
-                            <a href="" class="pre init" hidefocus="hidefocus">上一页</a>
+                            {% if  cur_page_num >1 and cur_classify %}
+                                <a href="/list/{{ pre_page_num }}/{{ cur_classify }}/" class="pre init"
+                                   hidefocus="hidefocus">上一页</a>
+                            {% endif %}
+                            {% if  cur_page_num >1 and not cur_classify %}
+                                <a href="/list/{{ pre_page_num }}/" class="pre init" hidefocus="hidefocus">上一页</a>
+                            {% endif %}
                             <ul id="bookpage-a">
 
+                                {% for i in range(1,total_page_num) %}
+                                    <li class="crt">
+                                    {% if cur_classify %}
+                                        <a href="/list/{{ i }}/{{ cur_classify }}/" hidefocus="hidefocus">{{ i }}</a>
+                                    {% else %}
+                                        <a href="/list/{{ i }}/" hidefocus="hidefocus">{{ i }}</a>
+                                    {% endif %}
+                                    </li>
+                                {% endfor %}
                                 <li class="crt">
-
-                                    <a href="" hidefocus="hidefocus">1</a>
-
-                                </li>
-
-                                <li class="">
-
-                                    <a href="" hidefocus="hidefocus">2</a>
-
-                                </li>
-
-                                <li class="">
-
-                                    <a href="" hidefocus="hidefocus">3</a>
-
+                                    {% if cur_classify %}
+                                        <a href="/list/{{ total_page_num }}/{{ cur_classify }}/" hidefocus="hidefocus">{{ total_page_num }}</a>
+                                    {% else %}
+                                        <a href="/list/{{ total_page_num }}/" hidefocus="hidefocus">{{ total_page_num }}</a>
+                                    {% endif %}
                                 </li>
 
                             </ul>
-                            <a href="" class="next " hidefocus="hidefocus">下一页</a>
+                            {% if cur_page_num < total_page_num and cur_classify %}
+                                <a href="/list/{{ next_page_num }}/{{ cur_classify }}/" class="next "
+                                   hidefocus="hidefocus">下一页</a>
+                            {% endif %}
+                            {% if cur_page_num < total_page_num and not cur_classify %}
+                                <a href="/list/{{ next_page_num }}/" class="next " hidefocus="hidefocus">下一页</a>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -146,9 +157,11 @@
             <div class="u-nav-stacked">
                 <h2>精品免费</h2>
                 <ul>
-                    <li {% if not classify %} class="crt" {% endif %}><a href="/list">精品推荐</a></li>
+                    <li {% if not cur_classify %} class="crt" {% endif %}><a href="/list/1/">精品推荐</a></li>
                     {% for book in classifys %}
-                        <li {% if book.distinctclassify==classify %} class="crt" {% endif %}><a href="/list/{{ book.distinctclassify }}">{{ book.distinctclassify }}</a></li>
+                        <li {% if book.classify==cur_classify %} class="crt" {% endif %}>
+                            <a href="/list/1/{{ book.classify }}/">{{ book.classify }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

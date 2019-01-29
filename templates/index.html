@@ -35,7 +35,7 @@
             <div class="g-mnc">
                 <div class="m-recommend" id="module-recommend">
                     <div class="u-ttl"><h5>精品推荐</h5>
-                        <div class="act"><a href="/list" class="u-more">查看更多<span class="arr">&gt;&gt;</span></a></div>
+                        <div class="act"><a href="/list/1/" class="u-more">查看更多<span class="arr">&gt;&gt;</span></a></div>
                     </div>
 
 
@@ -44,7 +44,7 @@
                             {% for book in book_list %}
                                 <li class="u-bookitm0 j-bookitm" data-id="{{ book.book_id }}">
                                     <div class="book">
-                                        <a href="/detail/1/{{ book.book_title }}" class="cover" hidefocus="hidefocus"
+                                        <a href="/detail/1/{{ book.book_title }}/" class="cover" hidefocus="hidefocus"
                                            target="_blank">
                                             <img src="{{ book.book_img }}" alt=""
                                                  ondragstart="return false;"
@@ -52,7 +52,7 @@
                                                  style="display:none"/>
                                         </a>
 
-                                        <a href="/detail/1/{{ book.book_title }}" class="title" hidefocus="hidefocus"
+                                        <a href="/detail/1/{{ book.book_title }}/" class="title" hidefocus="hidefocus"
                                            target="_blank">{{ book.book_title }}</a>
                                     </div>
                                     <div class="info">
@@ -103,7 +103,7 @@
                         {% for book in bestseller_list %}
                             <li class="itm itm-img">
                                 <em class="hot">{{ loop.index }}.</em>
-                                <a href="/detail/1/{{ book.book_title }}" hidefocus="hidefocus" title="" class="title"
+                                <a href="/detail/1/{{ book.book_title }}/" hidefocus="hidefocus" title="" class="title"
                                    target="_blank">{{ book.book_title }}</a>
                                 <p class="u-author">
                                     <span>{{ book.book_author }}</span>
@@ -125,7 +125,7 @@
                         {% for book in bestseller_list_m %}
                             <li class="itm">
                                 <em class="hot">{{ loop.index }}.</em>
-                                <a href="/detail/1/{{ book.book_title }}" title="" class="title" hidefocus="hidefocus"
+                                <a href="/detail/1/{{ book.book_title }}/" title="" class="title" hidefocus="hidefocus"
                                    target="_blank">{{ book.book_title }}</a>
                                 <p class="u-author">
                                     <span>{{ book.book_author }}</span>
@@ -146,7 +146,7 @@
                         {% for book in best_comment_list %}
                             <li class="itm">
                                 <em class="hot">{{ loop.index }}.</em>
-                                <a href="/detail/1/{{ book.book_title }}" title="" class="title" hidefocus="hidefocus"
+                                <a href="/detail/1/{{ book.book_title }}/" title="" class="title" hidefocus="hidefocus"
                                    target="_blank">{{ book.book_title }}</a>
                                 <p class="u-author">
                                     <span>{{ book.book_author }}</span>

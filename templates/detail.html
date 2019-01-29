@@ -30,7 +30,7 @@
             <span>当前位置：</span>
             <a href="/" hidefocus="hidefocus">首页</a>
             <span class="sep">&gt;</span>
-            <a href="/list/{{book_detail.classify}}" id='dkclassify' hidefocus="hidefocus">{{ book_detail.classify }}</a>
+            <a href="/list/1/{{book_detail.classify}}/" id='dkclassify' hidefocus="hidefocus">{{ book_detail.classify }}</a>
             <span class="sep">&gt;</span>
             <em>{{ book_detail.book_title }}</em>
         </div>
@@ -40,7 +40,7 @@
                     <div class="m-bookdata j-bookdata f-cb" itemscope itemtype="http://schema.org/Book">
 
                         <div class="book-wrap">
-                            <a href="/detail/1/{{ book_detail.book_title }}" class="cover" hidefocus="hidefocus"
+                            <a href="/detail/1/{{ book_detail.book_title }}/" class="cover" hidefocus="hidefocus"
                                target="_blank">
                                 <img src="{{ book_detail.book_img }}" alt="" ondragstart="return false;"
                                      oncontextmenu="return false;" onload="onLoadImg(this)" style="display:none"/>
@@ -91,7 +91,7 @@
                                         <a href="/verify"><span style="color: red">如果没有下载, 请等待5秒后可手动点击下载</span></a>
                                         <div class="btn j-buyarea f-cb">
                                             <img class="verify_code" src="{{ verify_images }}">
-                                            <form action="/detail/1/{{ book_detail.book_title }}">
+                                            <form action="/detail/1/{{ book_detail.book_title }}/">
                                                 <p>
                                                     输入验证码获得下载链接:
                                                     <label>
@@ -115,12 +115,12 @@
                         <div class="u-nav-tab j-tab">
                             <ul>
                                 <li class="itm {% if page_type=='1' %} crt {% endif %}"><a
-                                        href="/detail/1/{{ book_detail.book_title }}">简介</a>
+                                        href="/detail/1/{{ book_detail.book_title }}/">简介</a>
                                 </li>
 
                                 <li class="u-sep">|</li>
                                 <li class="itm {% if page_type=='2' %} crt {% endif %}"><a
-                                        href="/detail/2/{{ book_detail.book_title }}">目录</a></li>
+                                        href="/detail/2/{{ book_detail.book_title }}/">目录</a></li>
 
                                 <li class="u-sep">|</li>
                                 {#                                <li class="itm {% if page_type=='3' %} crt {% endif %}"><a#}
@@ -219,7 +219,7 @@
                             {% for book_detail in book_list %}
                                 <li class="u-bookitm2 j-bookitm" data-id="{{ book_detail.book_id }}">
                                     <div class="book">
-                                        <a href="/detail/1/{{ book_detail.book_title }}" class="cover"
+                                        <a href="/detail/1/{{ book_detail.book_title }}/" class="cover"
                                            hidefocus="hidefocus"
                                            target="_blank">
                                             <img src="{{ book_detail.book_img }}" alt=""
@@ -229,7 +229,7 @@
                                         </a>
                                     </div>
                                     <div class="info">
-                                        <a href="/detail/1/{{ book_detail.book_title }}" class="title"
+                                        <a href="/detail/1/{{ book_detail.book_title }}/" class="title"
                                            hidefocus="hidefocus"
                                            target="_blank">{{ book_detail.book_title }}</a>
                                         <div class="u-author">

@@ -1,24 +1,23 @@
-from io import BytesIO
-
 from flask import Flask, render_template, request, make_response, session
 import pymysql
-# from flask import render_template
-# from flask.ext.yzm import Captcha
 from flask_yzm import Captcha
 
+app = Flask(__name__)
 mysql_host = "localhost"
 mysql_user = "root"
+# mysql_passwd = "MyNewPass4!"
+# mysql_db = "mysite"
 mysql_passwd = ""
 mysql_db = "scrapy_db"
-conn = None
-cur = None
-app = Flask(__name__)
+conn = pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
+cur = conn.cursor()
 get_book_by_title = "select * from book_desc where book_title = %s"
 book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, new_price, old_price, book_img, book_content, book_catalogue from book_desc where book_title = '{book_title}' limit 1"
 book_classify_sql = "select distinct classify from book_desc WHERE classify is not null"
-book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, new_price, old_price, book_img from book_desc limit 20"
-
-book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, new_price, old_price, book_img from book_desc where classify='{classify}'limit 20"
+book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, new_price, old_price, book_img from book_desc limit {skip_num},{page_size}"
+book_count_sql = "select count(1) as book_num from book_desc"
+book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, new_price, old_price, book_img from book_desc where classify='{classify}' limit {skip_num},{page_size}"
+book_count_sql_filter = "select count(1) as book_num from book_desc where classify='{classify}'"
 
 bestseller_list_sql = "select book_title, book_author from book_desc limit 10"
 best_comment_list_sql = "select book_title, book_author from book_desc limit 10"
@@ -26,10 +25,9 @@ best_seller_list_sql = "select book_title, book_author from book_desc limit 10"
 
 
 def res_2_dict(res, sql):
-    cols_str = sql[7:sql.index("from")]
-    print("提取字段的字符串========:", cols_str)
-    cols = cols_str.replace(" ", "").split(",")
-    print("截取的列========:", cols)
+    col_str = sql[7:sql.index("from")].strip()
+    col_list = col_str.split(",")
+    cols = list(map(lambda x: x.strip().split(" ")[-1], col_list))
     arr = []
     for re in res:
         dicts = {}
@@ -42,11 +40,8 @@ def res_2_dict(res, sql):
 @app.route('/index/<page_type>')
 @app.route('/')
 def index(page_type='1'):
-    book_cage = {
-
-    }
-
-    book_list = res_2_dict(query(book_list_sql), book_list_sql)
+    list_sql = book_list_sql.format(skip_num=0, page_size=20)
+    book_list = res_2_dict(query(list_sql), list_sql)
     bestseller_list = res_2_dict(query(bestseller_list_sql), bestseller_list_sql)
     best_comment_list = res_2_dict(query(best_comment_list_sql), best_comment_list_sql)
     bestseller_list_m = res_2_dict(query(best_seller_list_sql), best_seller_list_sql)
@@ -57,23 +52,24 @@ def index(page_type='1'):
                            book_list=book_list, page_type=page_type)
 
 
-@app.route('/detail/<page_type>/<book_title>')
+@app.route('/detail/<page_type>/<book_title>/')
 def detail(page_type, book_title):
     title = "亮剑【 PDF免费下载 】"
     book_detail_sql2 = book_detail_sql.format(book_title=book_title)
     book_detail = res_2_dict(query(book_detail_sql2), book_detail_sql2)[0]
-    book_list = res_2_dict(query(book_list_sql), book_list_sql)
+    list_sql = book_list_sql.format(skip_num=0, page_size=20)
+    book_list = res_2_dict(query(list_sql), list_sql)
 
-    comment_list = [
-                       {
-                           "comment_title": "冲作者来的",
-                           "comment_detail": "我都不知道我什么时候买的这本书，今天睡不着就找了这本书看看，看起来真过瘾，正好宋史是我的缺失部分，趁着睡不着了解下。不知不觉都凌晨4点多了。评价一下，睡觉吧",
-                           "comment_grade": 10,
-                           "comment_times": "2天前",
-                           "comment_smile": 10,
-                           "comment_reply": 5
-                       }
-                   ] * 10
+    # comment_list = [
+    #                    {
+    #                        "comment_title": "冲作者来的",
+    #                        "comment_detail": "我都不知道我什么时候买的这本书，今天睡不着就找了这本书看看，看起来真过瘾，正好宋史是我的缺失部分，趁着睡不着了解下。不知不觉都凌晨4点多了。评价一下，睡觉吧",
+    #                        "comment_grade": 10,
+    #                        "comment_times": "2天前",
+    #                        "comment_smile": 10,
+    #                        "comment_reply": 5
+    #                    }
+    #                ] * 10
 
     verify_images = ["/static/image/yzm/code1.jpg",
                      "/static/image/yzm/code2.jpg",
@@ -83,7 +79,7 @@ def detail(page_type, book_title):
                            book_list=book_list,
                            book_detail=book_detail,
                            verify_images=verify_images[random.randint(0, 3)],
-                           comment_list=comment_list
+                           # comment_list=comment_list
                            )
 
 
@@ -92,17 +88,41 @@ def bangdan():
     return render_template('hello.html')
 
 
-@app.route('/list')
-@app.route('/list/<classify>')
-def list(classify=''):
-    if classify != '':
-        sql = book_list_sql_filter.format(classify=classify)
+@app.route('/list/<cur_page_num>/')
+@app.route('/list/<cur_page_num>/<cur_classify>/')
+def list2(cur_page_num=1, cur_classify=''):
+    page_size = 10
+    print("========================")
+    print(type(cur_page_num))
+    print(cur_page_num)
+    print("========================")
+    skip_num = (1 - 1) * page_size
+    if cur_classify != '':
+        sql = book_list_sql_filter.format(classify=cur_classify, skip_num=skip_num, page_size=page_size)
+        count_sql = book_count_sql.format(classify=cur_classify)
     else:
-        sql = book_list_sql
+        sql = book_list_sql.format(skip_num=skip_num, page_size=page_size)
+        count_sql = book_count_sql
     book_list = res_2_dict(query(sql), sql)
+    # 分类
     classifys = res_2_dict(query(book_classify_sql), book_classify_sql)
+    # 总条数
+    total = res_2_dict(query(count_sql), count_sql)
 
-    return render_template('list.html', book_list=book_list, classifys=classifys, classify=classify)
+    import math
+
+    total_page_num = math.ceil(int(total[0]["book_num"]) / page_size)
+    print("total_page_num=====",total_page_num)
+    return render_template(
+        'list.html',
+        book_list=book_list,
+        classifys=classifys,
+        cur_classify=cur_classify,
+        total_page_num=int(total_page_num),
+        cur_page_num=int(cur_page_num),
+        pre_page_num=1 if int(cur_page_num) == 1 else int(cur_page_num) - 1,
+        next_page_num=int(total_page_num) if int(cur_page_num) == total_page_num else int(cur_page_num) + 1,
+    )
 
 
 @app.route('/yzm/')
@@ -116,7 +136,7 @@ def graph_captcha():
     # 获取验证码
     text, image = Captcha.gene_graph_captcha()
     # 缓存
-    print("图形验证码是：", text.lower())
+    # print("图形验证码是：", text.lower())
     # zlcache.set(text.lower(), text.lower())
     out = BytesIO()
     image.save(out, "png")
@@ -198,7 +218,7 @@ def get_verify_code():
 
 
 def query(sql):
-    print("--------执行SQL-----------", sql)
+    # print("--------执行SQL-----------", sql)
     cur.execute(sql)
     return cur.fetchall()
 
@@ -209,7 +229,5 @@ def save(table, cols, values):
 
 
 if __name__ == '__main__':
-    conn = pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
-    cur = conn.cursor()
     app.run(host='0.0.0.0', debug=True)
     app.logger.debug('server running')

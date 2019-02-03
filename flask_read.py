@@ -3,14 +3,18 @@ import pymysql
 from flask_yzm import Captcha
 
 app = Flask(__name__)
-mysql_host = "localhost"
-mysql_user = "root"
-# mysql_passwd = "MyNewPass4!"
-# mysql_db = "mysite"
-mysql_passwd = ""
-mysql_db = "scrapy_db"
-conn = pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
-cur = conn.cursor()
+
+
+def get_conn():
+    mysql_host = "localhost"
+    mysql_user = "root"
+    # mysql_passwd = "MyNewPass4!"
+    # mysql_db = "mysite"
+    mysql_passwd = ""
+    mysql_db = "scrapy_db"
+    return pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
+
+
 get_book_by_title = "select * from book_desc where book_title = %s"
 book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, new_price, old_price, book_img, book_content, book_catalogue from book_desc where book_title = '{book_title}' limit 1"
 book_classify_sql = "select distinct classify from book_desc WHERE classify is not null"
@@ -217,17 +221,30 @@ def get_verify_code():
     # return image, "code"
 
 
+conn = get_conn()
+
+
 def query(sql):
-    # print("--------执行SQL-----------", sql)
+    app.logger.debug('server sql={sql}'.format(sql=sql))
+    global conn
+    if conn is None:
+        conn = get_conn()
+    cur = conn.cursor()
     cur.execute(sql)
     return cur.fetchall()
 
 
 def save(table, cols, values):
     insert_sql = "replace into {table} ({cols}) values ({values})".format(table=table, cols=cols, values=values)
+    global conn
+    if conn is None:
+        conn = get_conn()
+    cur = conn.cursor()
     cur.execute(insert_sql)
 
 
 if __name__ == '__main__':
+    if conn is None:
+        conn = get_conn()
     app.run(host='0.0.0.0', debug=True)
     app.logger.debug('server running')

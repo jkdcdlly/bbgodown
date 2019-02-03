@@ -8,8 +8,8 @@ app = Flask(__name__)
 def get_conn():
     mysql_host = "localhost"
     mysql_user = "root"
-    # mysql_passwd = "MyNewPass4!"
-    # mysql_db = "mysite"
+    mysql_passwd = "MyNewPass4!"
+    mysql_db = "mysite"
     mysql_passwd = ""
     mysql_db = "scrapy_db"
     return pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
@@ -27,7 +27,7 @@ bestseller_list_sql = "select book_title, book_author from book_desc limit 10"
 best_comment_list_sql = "select book_title, book_author from book_desc limit 10"
 best_seller_list_sql = "select book_title, book_author from book_desc limit 10"
 
-page_size = 1
+page_size = 20
 
 
 def res_2_dict(res, sql):
@@ -246,5 +246,5 @@ def save(table, cols, values):
 if __name__ == '__main__':
     if conn is None:
         conn = get_conn()
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=False)
     app.logger.debug('server running')

@@ -10,8 +10,8 @@ def get_conn():
     mysql_user = "root"
     mysql_passwd = "MyNewPass4!"
     mysql_db = "mysite"
-    mysql_passwd = ""
-    mysql_db = "scrapy_db"
+    # mysql_passwd = ""
+    # mysql_db = "scrapy_db"
     return pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
 
 

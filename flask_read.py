@@ -221,30 +221,27 @@ def get_verify_code():
     # return image, "code"
 
 
-conn = get_conn()
-
-
 def query(sql):
     app.logger.debug('server sql={sql}'.format(sql=sql))
-    global conn
-    if conn is None:
-        conn = get_conn()
+    conn = get_conn()
     cur = conn.cursor()
     cur.execute(sql)
+    conn.commit()
+    cur.close()
+    conn.close()
     return cur.fetchall()
 
 
 def save(table, cols, values):
     insert_sql = "replace into {table} ({cols}) values ({values})".format(table=table, cols=cols, values=values)
-    global conn
-    if conn is None:
-        conn = get_conn()
+    conn = get_conn()
     cur = conn.cursor()
     cur.execute(insert_sql)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 if __name__ == '__main__':
-    if conn is None:
-        conn = get_conn()
     app.run(host='0.0.0.0', debug=False)
     app.logger.debug('server running')

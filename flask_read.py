@@ -15,17 +15,17 @@ def get_conn():
     return pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
 
 
-get_book_by_title = "select * from book_desc where book_title = %s"
-book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where book_title = '{book_title}' limit 1"
-book_classify_sql = "select distinct classify from book_desc WHERE classify is not null"
-book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc limit {skip_num},{page_size}"
-book_count_sql = "select count(1) as book_num from book_desc"
-book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where classify='{classify}' limit {skip_num},{page_size}"
-book_count_sql_filter = "select count(1) as book_num from book_desc where classify='{classify}'"
+get_book_by_title = "select * from book_desc where is_enable=1 and book_title = %s "
+book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where is_enable=1 and book_title = '{book_title}' limit 1"
+book_classify_sql = "select distinct classify from book_desc WHERE is_enable=1 and classify is not null"
+book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 limit {skip_num},{page_size}"
+book_count_sql = "select count(1) as book_num from book_desc where is_enable=1 "
+book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and classify='{classify}' limit {skip_num},{page_size}"
+book_count_sql_filter = "select count(1) as book_num from book_desc where is_enable=1 and classify='{classify}'"
 
-bestseller_list_sql = "select book_title, book_author from book_desc limit 10"
-best_comment_list_sql = "select book_title, book_author from book_desc limit 10"
-best_seller_list_sql = "select book_title, book_author from book_desc limit 10"
+bestseller_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
+best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
+best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
 
 page_size = 20
 

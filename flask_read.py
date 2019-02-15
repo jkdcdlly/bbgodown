@@ -27,6 +27,8 @@ bestseller_list_sql = "select book_title, book_author from book_desc where is_en
 best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%weekday(now())=1 limit 10"
 best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%weekday(now())=2 limit 10"
 
+best_more_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%weekday(now())=3 limit 20"
+
 page_size = 20
 
 
@@ -63,8 +65,7 @@ def detail(page_type, book_title):
     title = "亮剑【 PDF免费下载 】"
     book_detail_sql2 = book_detail_sql.format(book_title=book_title)
     book_detail = res_2_dict(query(book_detail_sql2), book_detail_sql2)[0]
-    list_sql = book_list_sql.format(skip_num=0, page_size=page_size)
-    book_list = res_2_dict(query(list_sql), list_sql)
+    book_list = res_2_dict(query(best_more_list_sql), best_more_list_sql)
 
     # comment_list = [
     #                    {

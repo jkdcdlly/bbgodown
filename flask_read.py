@@ -23,9 +23,9 @@ book_count_sql = "select count(1) as book_num from book_desc where is_enable=1 "
 book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and classify='{classify}' limit {skip_num},{page_size}"
 book_count_sql_filter = "select count(1) as book_num from book_desc where is_enable=1 and classify='{classify}'"
 
-bestseller_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
-best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
-best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 limit 10"
+bestseller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%weekday(now())=0 limit 10"
+best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%weekday(now())=1 limit 10"
+best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%weekday(now())=2 limit 10"
 
 page_size = 20
 

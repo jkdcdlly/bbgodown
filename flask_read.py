@@ -16,18 +16,18 @@ def get_conn():
 
 
 get_book_by_title = "select * from book_desc where is_enable=1 and book_title = %s "
-book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where is_enable=1 and book_title = '{book_title}' limit 1"
-book_classify_sql = "select distinct classify from book_desc WHERE is_enable=1 and classify is not null"
-book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 order by book_id desc limit {skip_num},{page_size}"
+book_detail_sql = "select down_url,classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where is_enable=1 and book_title = '{book_title}' limit 1"
+book_classify_sql = "select distinct down_url,classify from book_desc WHERE is_enable=1 and classify is not null"
+book_list_sql = "select down_url,book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 order by book_id desc limit {skip_num},{page_size}"
 book_count_sql = "select count(1) as book_num from book_desc where is_enable=1 "
-book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and classify='{classify}' limit {skip_num},{page_size}"
-book_count_sql_filter = "select count(1) as book_num from book_desc where is_enable=1 and classify='{classify}'"
+book_list_sql_filter = "select down_url,book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and classify='{classify}' limit {skip_num},{page_size}"
+book_count_sql_filter = "select down_url,count(1) as book_num from book_desc where is_enable=1 and classify='{classify}'"
 
 bestseller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%15=weekday(now())+0 limit 10"
 best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%15=weekday(now())+1 limit 10"
 best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%15=weekday(now())+2 limit 10"
 
-best_more_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%15=weekday(now())+3 limit 20"
+best_more_list_sql = "select down_url,book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%15=weekday(now())+3 limit 20"
 
 page_size = 20
 

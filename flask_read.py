@@ -8,17 +8,17 @@ app = Flask(__name__)
 def get_conn():
     mysql_host = "localhost"
     mysql_user = "root"
-    mysql_passwd = "MyNewPass4!"
-    mysql_db = "mysite"
-    # mysql_passwd = ""
-    # mysql_db = "scrapy_db"
+    # mysql_passwd = "MyNewPass4!"
+    # mysql_db = "mysite"
+    mysql_passwd = ""
+    mysql_db = "scrapy_db"
     return pymysql.connect(mysql_host, mysql_user, mysql_passwd, mysql_db, charset='utf8mb4', )
 
 
 get_book_by_title = "select * from book_desc where is_enable=1 and book_title = %s "
 book_detail_sql = "select classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where is_enable=1 and book_title = '{book_title}' limit 1"
 book_classify_sql = "select distinct classify from book_desc WHERE is_enable=1 and classify is not null"
-book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 limit {skip_num},{page_size}"
+book_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%15=weekday(now())+4 limit {skip_num},{page_size}"
 book_count_sql = "select count(1) as book_num from book_desc where is_enable=1 "
 book_list_sql_filter = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and classify='{classify}' limit {skip_num},{page_size}"
 book_count_sql_filter = "select count(1) as book_num from book_desc where is_enable=1 and classify='{classify}'"
@@ -27,7 +27,7 @@ bestseller_list_sql = "select book_title, book_author from book_desc where is_en
 best_comment_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%15=weekday(now())+1 limit 10"
 best_seller_list_sql = "select book_title, book_author from book_desc where is_enable=1 and book_id%15=weekday(now())+2 limit 10"
 
-best_more_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%7=weekday(now())+3 limit 20"
+best_more_list_sql = "select book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 and book_id%15=weekday(now())+3 limit 20"
 
 page_size = 20
 
@@ -58,6 +58,16 @@ def index(page_type='1'):
                            best_comment_list=best_comment_list,
                            bestseller_list_m=bestseller_list_m,
                            book_list=book_list, page_type=page_type)
+
+
+@app.route('/m/')
+def m_index():
+    bestseller_list = res_2_dict(query(bestseller_list_sql), bestseller_list_sql)
+    best_comment_list = res_2_dict(query(best_comment_list_sql), best_comment_list_sql)
+    return render_template('m_index.html',
+                           bestseller_list=bestseller_list,
+                           best_comment_list=best_comment_list,
+                           )
 
 
 @app.route('/detail/<page_type>/<book_title>/')
@@ -244,5 +254,5 @@ def save(table, cols, values):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=True)
     app.logger.debug('server running')

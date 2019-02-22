@@ -30,7 +30,8 @@
             <span>当前位置：</span>
             <a href="/" hidefocus="hidefocus">首页</a>
             <span class="sep">&gt;</span>
-            <a href="/list/1/{{book_detail.classify}}/" id='dkclassify' hidefocus="hidefocus">{{ book_detail.classify }}</a>
+            <a href="/list/1/{{ book_detail.classify }}/" id='dkclassify'
+               hidefocus="hidefocus">{{ book_detail.classify }}</a>
             <span class="sep">&gt;</span>
             <em>{{ book_detail.book_title }}</em>
         </div>
@@ -88,20 +89,25 @@
                                         </i>
                                     </div>
                                     <div class="act j-act f-cb" style="">
-                                        <a href="/verify"><span style="color: red">如果没有下载, 请等待5秒后可手动点击下载</span></a>
+
                                         <div class="btn j-buyarea f-cb">
                                             <img class="verify_code" src="{{ verify_images }}">
-                                            <form action="/detail/1/{{ book_detail.book_title }}/">
-                                                <p>
-                                                    输入验证码获得下载链接:
-                                                    <label>
-                                                        <input name="verify_code" type="text"/>
-                                                    </label>
-                                                </p>
-                                                <input name="verify_code" type="submit" class="u-btn1" value="提交"/>
+                                            {% if book_detail.down_url %}
+                                                <form action="{{ book_detail.down_url }}">
+                                            {% else %}
+                                                <form action="/detail/1/{{ book_detail.book_title }}/">
+                                            {% endif %}
+                                            <p>
+                                                输入验证码获得下载链接:
+                                                <label>
+                                                    <input name="verify_code" type="text"/>
+                                                </label>
+                                            </p>
+                                            <input name="verify_code" type="submit" class="u-btn1" value="下载"/>
                                             </form>
 
-
+                                            <span style="color: red">注：如果下载失败，请关注公众号，联系小编</span>
+                                            <img src="/static/image/qrcode_for_gh_f67b472a3435_258.jpg">
                                         </div>
 
 

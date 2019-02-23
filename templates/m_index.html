@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <title>多看书城</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="duokan"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <meta name="apple-itunes-app" content="app-id=517850153"/>
+    <link rel="apple-touch-icon" href="/static/touch-icon-iphone-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/touch-icon-ipad-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/touch-icon-iphone-retina-precomposed.png"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/touch-icon-ipad-retina-precomposed.png"/>
+
+
+    <meta name="keywords" content="duokan,多看,电子书下载,电子书,免费电子书"/>
+    <meta name="description"
+          content="提供精品正版电子书免费下载和购买；多看阅读APP目前支持Android、iPhone、iPad、Kindle等多种设备。多看阅读，享受精品阅读时光。好书，你值得多看。"/>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/m_style.css"/>
+    <script src="/static/javascript/921113d72f32ff2c52f4171536750339.js" data-no-instant></script>
+    <!-- <script src="/static/javascript/921113d72f32ff2c52f4171536750339.js,viperjs/instantclick/2.1.0/instantclick.js" data-no-instant></script> -->
+    <script src="/static/javascript/seajs-config.js" data-no-instant></script>
+
+    {#    <script type="text/javascript">document.domain = 'duokan.com';</script>#}
+    <script>
+        window.onLoadImg = function (evt) {
+            evt.style.display = 'block'
+        }
+        try {
+            var buyJump = localStorage.getItem('wap_reader_buying_jump');
+            if (buyJump) {
+                localStorage.removeItem('wap_reader_buying_jump');
+                location.href = buyJump;
+            }
+        } catch (ex) {
+        }
+    </script>
+</head>
+<body id="mobile-duokan-com" data-action="app/action/app">
+<div class="g-doc">
+    <header class="g-hd">
+
+        <div class="m-hd">
+
+
+            <a href="" class="m-logo">多看阅读</a>
+            <div class="act f-cb">
+                <div class="m-login" data-widget="app/view/login">
+                    <ul class="j-loginstatic f-cb">
+                        <li><a href="" class="j-login"><b class="u-icn-person"></b><span class="j-txt"><span></a></li>
+                        <li class="u-sep"><b></b></li>
+                    </ul>
+                </div>
+                <div class="m-search" data-action-run="searchBook">
+                    <a href="" class="search"><b class="u-icn-search"></b></a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </header>
+    <div class="g-bd" id="body">
+
+        <div class="m-nav" data-widget="app/view/login">
+            <table>
+                <tr>
+                    <td><a href="" class="itm sale"><em></em></a>特价</td>
+                    <td><a href="" class="itm free"><em></em></a>免费</td>
+                    <td><a href="" class="itm good"><em></em></a>畅销</td>
+                    <td><a href="" class="itm bookshelf" target="_blank"><em></em></a>书架</td>
+                </tr>
+                <tr>
+                    <td><a href="" class="itm catagory"><em></em></a>分类</td>
+                    <td><a href="" class="redeem"><em></em></a>兑换码</td>
+                    <td><a data-href="" class="coupon j-needlogin"><em></em></a>购书券</td>
+                    <td><a href="" class="itm down" target="_blank"><em></em></a>客户端</td>
+                </tr>
+            </table>
+        </div>
+        <section class="u-area">
+            <!-- 推荐 -->
+            <div class="m-recommend">
+                <div class="u-ttl3">
+                    <h3>精品推荐</h3>
+                    <a href="" class="more">全部</a>
+                </div>
+
+                <ul class="u-list-col3">
+                    {% for book in bestseller_list %}
+                        <li class="u-bookitm j-bookitm" book_id="{{ book.book_id }}">
+                            <a href="" class="book">
+                        <span class="cover">
+                            <img src="{{ book.book_img }}" alt="" ondragstart="return false;"
+                                 oncontextmenu="return false;" style="display:none"/>
+                            </span>
+                                <div class="info">
+                                    <h3 class="title">{{ book.book_title }}</h3>
+                                    <p class="author">
+
+                                        <span>{{ book.book_author }}</span>
+
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+    <!-- 导航盖层 -->
+    <div class="m-quicknav-cnt" id="quicknav" style="display:none;">
+        <div class="m-nav" data-widget="app/view/login">
+            <table>
+                <tr>
+                    <td><a href="" class="itm sale"><em></em></a>特价</td>
+                    <td><a href="" class="itm free"><em></em></a>免费</td>
+                    <td><a href="" class="itm good"><em></em></a>畅销</td>
+                    <td><a href="" class="itm bookshelf" target="_blank"><em></em></a>书架</td>
+                </tr>
+                <tr>
+                    <td><a href="" class="itm catagory"><em></em></a>分类</td>
+                    <td><a href="" class="redeem"><em></em></a>兑换码</td>
+                    <td><a data-href="" class="coupon j-needlogin"><em></em></a>购书券</td>
+                    <td><a href="" class="itm down" target="_blank"><em></em></a>客户端</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- 搜索盖层 -->
+    <div class="m-search-form" id="search-form" style="display:none" data-widget="app/view/search">
+        <a href="" class="close j-close"><b class="u-icn-close"></b></a>
+        <div class="form">
+            <input class="j-search-input" type="text" placeholder="输入书名或作者…"/>
+            <a href="" class="u-icn-search2 j-search"></a>
+        </div>
+        <div class="m-hotsearch j-hotsearch">
+            <h4><p>大家都在搜…</p></h4>
+            <ul class="u-list-col1">
+
+                <li><a href="" hidefocus="hidefocus">你和我的倾城时光（全集）</a></li>
+
+                <li><a href="" hidefocus="hidefocus">将夜（全集）</a></li>
+
+                <li><a href="" hidefocus="hidefocus">原来你还在这里（全二册）</a></li>
+
+                <li><a href="" hidefocus="hidefocus">创业时代</a></li>
+
+                <li><a href="" hidefocus="hidefocus">凉生，我们可不可以不忧伤（全五册）</a></li>
+
+            </ul>
+        </div>
+        <div class="m-searchlist j-searchlist" style="display:none;">
+            <ul class="u-list-col1 j-search-list">
+            </ul>
+        </div>
+    </div>
+
+    <div class="g-ft">
+        <div class="m-cprt">
+            <p>
+                <a href="" target="_blank">多看客户端</a>
+                <span>｜</span>
+                <a href="" id="go-desktop">电脑版</a>
+                <script>
+                    (function () {
+                        seajs.use('app/sdk/sdk', function (sdk) {
+                            sdk.$('#go-desktop').click(function () {
+                                sdk.data.cookie.set('desktop', 1);
+                                location.href = '/?from=mobile';
+                            });
+                        });
+                    })();
+                </script>
+            </p>
+            <p>Copyright&copy;duokan.com</p>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    seajs.use('app/app', function (app) {
+        app.load();
+    })
+</script>
+
+
+</body>
+</html>

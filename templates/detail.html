@@ -4,12 +4,6 @@
 <html lang="zh-CN">
 <head>
     <title>{{ book_detail.book_title }} -【免费下线】 </title>
-    <meta charset="utf-8"/>
-    <meta name="author" content="duokan"/>
-    <meta property="wb:webmaster" content="614a83f3edbfc3be"/>
-
-    <meta name="apple-itunes-app"
-          content="app-id=517850153, app-argument=duokan-reader://store/book/19af991492624e419d5696f8c749f582"/>
 
 
     <meta name="keywords" content="{{ book_detail.keywords }}"/>
@@ -18,8 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link type="text/css" rel="stylesheet" href="/static/css/book.css"/>
 </head>
-<body id="page-duokan-com" itemscope itemtype="http://schema.org/WebPage" class="xm-accounts">
-<noscript>请使用支持脚本的浏览器！</noscript>
+<body>
 <div class="g-doc">
     <header class="g-hd">
         {% include 'div_head.html' %}
@@ -49,7 +42,7 @@
 
                         </div>
                         <div class="desc">
-                            <h2>{{ book_detail.book_title }}</h2>
+                            <h1>{{ book_detail.book_title }}</h1>
 
 
                             <div class="u-stargrade" itemprop="aggregateRating" itemscope
@@ -81,13 +74,6 @@
 
 
                                 <div class="pay">
-                                    <div class="price">
-                                        <em>{{ book_detail.new_price }}</em>
-                                        <span class="u-sep">|</span>
-                                        <i>原价
-                                            <del>{{ book_detail.old_price }}</del>
-                                        </i>
-                                    </div>
                                     <div class="act j-act f-cb" style="">
 
                                         <div class="btn j-buyarea f-cb">

@@ -23,6 +23,7 @@ def get_conn():
 
 
 get_book_by_title = "select * from book_desc where is_enable=1 and book_title = %s "
+get_book_search_title = "select * from book_desc where is_enable=1 and book_title like '%{book_title}%'"
 book_detail_sql = "select down_url,classify,keywords,description,book_id,book_url, book_title, book_author, book_translator, book_copyright, book_datePublished, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img, book_content, book_catalogue from book_desc where is_enable=1 and book_title = '{book_title}' limit 1"
 book_classify_sql = "select distinct down_url,classify from book_desc WHERE is_enable=1 and classify is not null"
 book_list_sql = "select down_url,book_id,book_title, book_author, book_translator, book_grade, book_score, book_rating, '限时免费' as new_price, old_price, book_img from book_desc where is_enable=1 order by book_id desc limit {skip_num},{page_size}"
@@ -144,6 +145,59 @@ def list2(cur_page_num='1', cur_classify=''):
         xianshi_page_num2=total_page_num if int(cur_page_num) + 3 >= total_page_num else int(cur_page_num) + 3,
         pre_page_num=1 if int(cur_page_num) == 1 else int(cur_page_num) - 1,
         next_page_num=int(total_page_num) if int(cur_page_num) == total_page_num else int(cur_page_num) + 1,
+    )
+
+
+@app.route('/m/list/<cur_page_num>/')
+@app.route('/m/list/<cur_page_num>/<cur_classify>/')
+def m_list(cur_page_num='1', cur_classify=''):
+    skip_num = (int(cur_page_num) - 1) * page_size
+    if cur_classify != '':
+        sql = book_list_sql_filter.format(classify=cur_classify, skip_num=skip_num, page_size=page_size)
+        count_sql = book_count_sql_filter.format(classify=cur_classify)
+    else:
+        sql = book_list_sql.format(skip_num=skip_num, page_size=page_size)
+        count_sql = book_count_sql
+    app.logger.debug(sql)
+    book_list = res_2_dict(query(sql), sql)
+    # 分类
+    classifys = res_2_dict(query(book_classify_sql), book_classify_sql)
+    # 总条数
+    total = res_2_dict(query(count_sql), count_sql)
+
+    import math
+
+    total_page_num = math.ceil(int(total[0]["book_num"]) / page_size)
+    print("total_page_num=====", total_page_num)
+    return render_template(
+        'm_list.html',
+        book_list=book_list,
+        classifys=classifys,
+        cur_classify=cur_classify,
+        total_page_num=int(total_page_num),
+        cur_page_num=int(cur_page_num),
+        xianshi_page_num1=2 if int(cur_page_num) < 4 else int(cur_page_num) - 2,
+        xianshi_page_num2=total_page_num if int(cur_page_num) + 3 >= total_page_num else int(cur_page_num) + 3,
+        pre_page_num=1 if int(cur_page_num) == 1 else int(cur_page_num) - 1,
+        next_page_num=int(total_page_num) if int(cur_page_num) == total_page_num else int(cur_page_num) + 1,
+    )
+
+
+@app.route('/m/search/<book_title>/')
+def m_search(book_title=''):
+    sql = get_book_search_title.format(book_title=book_title)
+    app.logger.debug(sql)
+    book_list = res_2_dict(query(sql), sql)
+
+    return render_template(
+        'm_list.html',
+        book_list=book_list,
+        total_page_num=1,
+        cur_page_num=1,
+        xianshi_page_num1=1,
+        xianshi_page_num2=1,
+        pre_page_num=1,
+        next_page_num=1,
     )
 
 

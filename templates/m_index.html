@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
 
-    <meta name="keywords" content="duokan,多看,电子书下载,电子书,免费电子书"/>
+    <meta name="keywords" content="mobi下载,epud下载,pdf下载,txt格式下载,kindle下载,电子书下载"/>
     <meta name="description"
-          content="提供精品正版电子书免费下载和购买；多看阅读APP目前支持Android、iPhone、iPad、Kindle等多种设备。多看阅读，享受精品阅读时光。好书，你值得多看。"/>
+          content="提供精品正版电子书免费下载和购买；支持Android、iPhone、iPad、Kindle等多种设备。享受精品阅读时光。好书，你值得多看。"/>
 
     <link type="text/css" rel="stylesheet" href="/static/css/m_style.css"/>
     <script src="/static/javascript/921113d72f32ff2c52f4171536750339.js" data-no-instant></script>
@@ -37,22 +37,7 @@
     <header class="g-hd">
 
         <div class="m-hd">
-
-
-            <a href="" class="m-logo">多看阅读</a>
-            <div class="act f-cb">
-                <div class="m-login" data-widget="app/view/login">
-                    <ul class="j-loginstatic f-cb">
-                        <li><a href="" class="j-login"><b class="u-icn-person"></b><span class="j-txt"><span></a></li>
-                        <li class="u-sep"><b></b></li>
-                    </ul>
-                </div>
-                <div class="m-search" data-action-run="searchBook">
-                    <a href="" class="search"><b class="u-icn-search"></b></a>
-                </div>
-            </div>
-
-
+            <a href="/m/" class="m-logo">bbgo免费图书</a>
         </div>
 
     </header>
@@ -61,16 +46,8 @@
         <div class="m-nav" data-widget="app/view/login">
             <table>
                 <tr>
-                    <td><a href="" class="itm sale"><em></em></a>特价</td>
-                    <td><a href="" class="itm free"><em></em></a>免费</td>
-                    <td><a href="" class="itm good"><em></em></a>畅销</td>
-                    <td><a href="" class="itm bookshelf" target="_blank"><em></em></a>书架</td>
-                </tr>
-                <tr>
-                    <td><a href="" class="itm catagory"><em></em></a>分类</td>
-                    <td><a href="" class="redeem"><em></em></a>兑换码</td>
-                    <td><a data-href="" class="coupon j-needlogin"><em></em></a>购书券</td>
-                    <td><a href="" class="itm down" target="_blank"><em></em></a>客户端</td>
+                    <td><a href="/m/list/1/" class="itm free"><em></em></a>图书列表</td>
+                    <td><a href="javascript:void(0);" class="itm catagory"><em></em></a>分类</td>
                 </tr>
             </table>
         </div>
@@ -161,34 +138,11 @@
     </div>
 
     <div class="g-ft">
-        <div class="m-cprt">
-            <p>
-                <a href="" target="_blank">多看客户端</a>
-                <span>｜</span>
-                <a href="" id="go-desktop">电脑版</a>
-                <script>
-                    (function () {
-                        seajs.use('app/sdk/sdk', function (sdk) {
-                            sdk.$('#go-desktop').click(function () {
-                                sdk.data.cookie.set('desktop', 1);
-                                location.href = '/?from=mobile';
-                            });
-                        });
-                    })();
-                </script>
-            </p>
-            <p>Copyright&copy;duokan.com</p>
-        </div>
+        {% include "m_footer.html" %}
     </div>
 
+
 </div>
-
-
-<script>
-    seajs.use('app/app', function (app) {
-        app.load();
-    })
-</script>
 
 
 </body>

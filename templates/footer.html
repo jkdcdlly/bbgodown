@@ -39,3 +39,74 @@
         </li>
     </ul>
 </div>
+
+<script>
+    seajs.config({
+        base: '/static/lib/',
+        debug: '',
+        alias: {
+// gallery
+            'jquery': 'gallery/jquery/1.8.3/jquery-debug',
+            'underscore': 'gallery/underscore/1.0/underscore',
+// base
+            'core': 'viperjs/base/core',
+            'base': 'viperjs/base/base',
+            'event': 'viperjs/base/event',
+            'el': 'viperjs/base/element',
+            'config': 'viperjs/base/config',
+            'platform': 'viperjs/base/config',
+            'util': 'viperjs/base/util',
+// widget
+            'tpl': 'viperjs/widget/template/tpl',
+            'storage': 'duokan/store/1/common/storage/storage',
+// project
+            'module': 'duokan/store/1/module/module',
+            'business': 'duokan/store/1/business',
+            'common': 'duokan/store/1/common',
+            'request': 'duokan/store/1/common/request/request'
+        },
+        paths: {
+            'base': 'viperjs/base',
+            'widget': 'viperjs/widget',
+            'patched': 'viperjs/patched/compat',
+            'gallery': 'viperjs/gallery',
+            'common': 'duokan/store/1/common',
+            'module': 'duokan/store/1/module'
+        },
+        map: [
+            [/^(.*\/static\/lib\/.*\.(?:css|js))(?:.*)$/i, '$1?201809261044']
+        ],
+        preload: [
+            this.JSON ? '' : 'gallery/json/1.0.2/json',
+            Function.prototype.bind ? '' : 'gallery/es5-safe/es5-safe',
+        ]
+    });
+    (function () {
+        var _debug = seajs.config.data.debug;
+        if (location.search.indexOf('debug') !== -1
+                || location.host.indexOf('debug') == 0) {
+            _debug = 'debug';
+        }
+        if (location.search.indexOf('raw') !== -1
+                || location.host.indexOf('raw') == 0) {
+            _debug = 'raw';
+        }
+        if (_debug == 'debug') {
+            seajs.config.data.map = [[/page\//i, 'debug/']];
+        }
+        switch (_debug) {
+            case 'debug':
+            case 'dev':
+                seajs.config({preload: ['duokan/store/1/core-debug.js']});
+                break;
+            case 'raw':
+                seajs.config({preload: ['jquery']});
+                break;
+            default:
+                seajs.config({preload: ['duokan/store/1/core.js']});
+        }
+    })();
+    seajs.use('jquery', function () {
+        seajs.emit('avail');
+    });
+</script>

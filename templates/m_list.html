@@ -37,28 +37,7 @@
 <div class="g-doc">
     <header class="g-hd">
 
-        <div class="m-hd">
-            <ul class="m-pagenav f-cb">
-                <li class="itm u-back" id="goback" data-action-run="goBack" onclick="window.history.go(-1)">
-                    <div class="icn-arrow icn-arrow-left">
-                        <span class="arrow0"></span>
-                        <span class="arrow1"></span>
-                    </div>
-                </li>
-                <li class="u-sep"><b></b></li>
-                <li class="itm" ><h1>图书列表</h1></li>
-            </ul>
-            <div class="act f-cb">
-
-                <div class="m-quicknav" data-action-run="quickNav">
-                    <a href="javascript:void(0);" onclick="showquicknav()"><b class="icn-quicknav"></b></a>
-                </div>
-                <div class="m-search" data-action-run="searchBook">
-                    <a href="javascript:void(0);" class="search" onclick="showsearchBook()"><b class="u-icn-search"></b></a>
-                </div>
-            </div>
-        </div>
-
+        {% include "m_div_header.html" %}
     </header>
     <div class="g-bd" id="body">
 
@@ -67,7 +46,7 @@
             <ul class="u-list-col1">
                 {% for book in book_list %}
                     <li class="u-bookitm j-bookitm" book_id="{{ book.book_id }}">
-                        <a href="" class="book">
+                        <a href="/m/detail/1/{{ book.book_title }}" class="book">
                     <span class="cover">
                     <img src="{{ book.book_img }}" alt="" ondragstart="return false;"
                          oncontextmenu="return false;"
@@ -149,31 +128,6 @@
     </div>
 
 </div>
-<script>
-    function showquicknav() {
-        var div1 = document.getElementById("quicknav");
-        style_val = div1.style.display;
-        if ("none" == style_val) {
-            div1.style.display = "block";
-        } else {
-            div1.style.display = "none";
-        }
-    }
-
-    function showsearchBook() {
-        var div_body = document.getElementById("body");
-        var search_form = document.getElementById("search-form");
-        style_val = search_form.style.display;
-        if ("none" == style_val) {
-            div_body.style.display = "none";
-            search_form.style.display = "block";
-        } else {
-            div_body.style.display = "block";
-            search_form.style.display = "none";
-        }
-
-    }
-</script>
 
 </body>
 </html>

@@ -3,9 +3,7 @@
 
 <html lang="zh-CN">
 <head>
-    <title>{{ book_detail.book_title }} -【免费下线】 </title>
-
-
+    <title>{{ book_detail.book_title }} -【 PDF | Kindle | 免费下线】 </title>
     <meta name="keywords" content="{{ book_detail.keywords }}"/>
     <meta name="description" content="{{ book_detail.description }}"/>
     {% include 'head.html' %}
@@ -137,17 +135,7 @@
 
                         <section class="cnt j-cnt">
                             <article class="toc" {% if page_type!='2' %} style="display:none" {% endif %}>
-                                {#                                <ol>#}
-                                {##}
-                                {#                                    {% for brief in brief_list %}#}
-                                {#                                        <li class="">#}
-                                {#                                            <h3 class="title">{{ brief.brief_title }}</h3>#}
-                                {#                                            <div class="brief brief0"><p>#}
-                                {#                                                {{ brief.brief_detail }}</p></div>#}
-                                {#                                        </li>#}
-                                {#                                    {% endfor %}#}
-                                {##}
-                                {#                                </ol>#}
+
                                 {{ book_detail.book_catalogue|safe }}
                             </article>
                         </section>

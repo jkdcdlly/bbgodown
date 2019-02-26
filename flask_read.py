@@ -80,7 +80,6 @@ def m_index():
 
 @app.route('/detail/<page_type>/<book_title>/')
 def detail(page_type, book_title):
-    title = "亮剑【 PDF免费下载 】"
     book_detail_sql2 = book_detail_sql.format(book_title=book_title)
     book_detail = res_2_dict(query(book_detail_sql2), book_detail_sql2)[0]
     book_list = res_2_dict(query(best_more_list_sql), best_more_list_sql)
@@ -100,11 +99,24 @@ def detail(page_type, book_title):
                      "/static/image/yzm/code2.jpg",
                      "/static/image/yzm/code3.jpg",
                      "/static/image/yzm/code4.jpg"]
-    return render_template('detail.html', page_type=page_type, title=title,
+    return render_template('detail.html', page_type=page_type,
                            book_list=book_list,
                            book_detail=book_detail,
                            verify_images=verify_images[random.randint(0, 3)],
                            # comment_list=comment_list
+                           )
+
+
+@app.route('/m/detail/<page_type>/<book_title>/')
+def m_detail(page_type, book_title):
+    book_detail_sql2 = book_detail_sql.format(book_title=book_title)
+    book_detail = res_2_dict(query(book_detail_sql2), book_detail_sql2)[0]
+    book_list = res_2_dict(query(best_more_list_sql), best_more_list_sql)
+
+    return render_template('m_detail.html',
+                           book_list=book_list,
+                           book_detail=book_detail,
+                           page_type=page_type
                            )
 
 

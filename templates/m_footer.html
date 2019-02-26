@@ -4,3 +4,28 @@
     </p>
 </div>
 
+<script>
+    function showquicknav() {
+        var div1 = document.getElementById("quicknav");
+        style_val = div1.style.display;
+        if ("none" == style_val) {
+            div1.style.display = "block";
+        } else {
+            div1.style.display = "none";
+        }
+    }
+
+    function showsearchBook() {
+        var div_body = document.getElementById("body");
+        var search_form = document.getElementById("search-form");
+        style_val = search_form.style.display;
+        if ("none" == style_val) {
+            div_body.style.display = "none";
+            search_form.style.display = "block";
+        } else {
+            div_body.style.display = "block";
+            search_form.style.display = "none";
+        }
+
+    }
+</script>

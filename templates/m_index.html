@@ -62,7 +62,7 @@
                 <ul class="u-list-col3">
                     {% for book in bestseller_list %}
                         <li class="u-bookitm j-bookitm" book_id="{{ book.book_id }}">
-                            <a href="" class="book">
+                            <a href="/m/detail/1/{{ book.book_title }}" class="book">
                         <span class="cover">
                             <img src="{{ book.book_img }}" alt="" ondragstart="return false;"
                                  oncontextmenu="return false;" style="display:none"/>

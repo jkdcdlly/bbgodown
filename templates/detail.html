@@ -79,14 +79,10 @@
                                             {% if book_detail.down_url %}
                                                 <form action="{{ book_detail.down_url }}">
                                             {% else %}
-                                                <form action="/detail/1/{{ book_detail.book_title }}/">
+                                                <form action="https://pan.baidu.com/s/1m4hgHUnGMPNL71J2iHKkkw/">
                                             {% endif %}
-                                            <p>
-                                                输入验证码获得下载链接:
-                                                <label>
-                                                    <input name="verify_code" type="text"/>
-                                                </label>
-                                            </p>
+
+
                                             <input name="verify_code" type="submit" class="u-btn1" value="下载"/>
                                             </form>
 

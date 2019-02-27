@@ -120,9 +120,6 @@ def m_detail(page_type, book_title):
                            )
 
 
-@app.route('/榜单家族')
-def bangdan():
-    return render_template('hello.html')
 
 
 @app.route('/list/<cur_page_num>/')

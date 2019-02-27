@@ -4,22 +4,18 @@
 <html lang="zh-CN">
 <head>
     <title>{{ book_detail.book_title }} -【 PDF | Kindle | 免费下线】 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="keywords" content="{{ book_detail.keywords }}"/>
     <meta name="description" content="{{ book_detail.description }}"/>
     <meta charset="utf-8"/>
-    <link type="text/css" rel="stylesheet" href="/static/css/m_style.css?eab1ca4402d25e41aaf82d5b084ee190"/>
-    <script src="/static/javascript/sea-modules/seajs/seajs/2.1.0/sea.js,seajs/seajs-combo/1.0.1/seajs-combo.js,seajs/seajs-style/1.0.0/seajs-style.js,gallery/jquery/1.9.1/jquery.js"
-            data-no-instant></script>
-
+    <link type="text/css" rel="stylesheet" href="/static/css/m_style.css"/>
     <script src="/static/javascript/seajs-config.js" data-no-instant></script>
-
-
     <link type="text/css" rel="stylesheet" href="/static/css/book.css"/>
 
     <script>
         window.onLoadImg = function (evt) {
             evt.style.display = 'block'
-        }
+        };
         try {
             var buyJump = localStorage.getItem('wap_reader_buying_jump');
             if (buyJump) {
@@ -34,7 +30,33 @@
 <div class="g-doc">
     <header class="g-hd">
 
-        {% include "m_div_header.html" %}
+        {#        {% include "m_div_header.html" %}#}
+
+        <div class="m-hd">
+
+
+            <ul class="m-pagenav f-cb">
+                <li class="itm u-back" id="goback" data-action-run="goBack" onclick="window.location.href='/m/'">
+                    <div class="icn-arrow icn-arrow-left">
+                        <span class="arrow0"></span>
+                        <span class="arrow1"></span>
+                    </div>
+                </li>
+                <li class="u-sep"><b></b></li>
+                <li class="itm"><h1>图书详情</h1></li>
+            </ul>
+            <div class="act f-cb">
+
+                <div class="m-quicknav" data-action-run="quickNav">
+                    <a href="javascript:void(0);" onclick="showquicknav()"><b class="icn-quicknav"></b></a>
+                </div>
+                <div class="m-search" data-action-run="searchBook">
+                    <a href="javascript:void(0);" class="search"><b class="u-icn-search" onclick="showsearchBook()"></b></a>
+                </div>
+            </div>
+
+
+        </div>
 
     </header>
     <div class="g-bd" id="body">
@@ -61,7 +83,11 @@
                                 <td class="published"><p><span>{{ book_detail.book_copyright }}</span></p></td>
                             </tr>
 
-
+                            <tr>
+                                <td colspan="3">
+                                    <a href="{% if book_detail.down_url %} {{ book_detail.down_url }} {% else %} https://pan.baidu.com/s/1m4hgHUnGMPNL71J2iHKkkw {% endif %}"
+                                       class="u-btn1 j-buy">免费下载</a></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -70,21 +96,12 @@
                  data-widget-cid="widget-1">
                 <table>
                     <tbody>
-                    <tr >
-                        <td rowspan="3">
-                            <img src="/static/image/qrcode_for_gh_f67b472a3435_258.jpg">
-                        </td>
-
-                    </tr>
                     <tr>
                         <td>
-                            <a href="{% if book_detail.down_url %} {{ book_detail.down_url }} {% else %} https://pan.baidu.com/s/1m4hgHUnGMPNL71J2iHKkkw {% endif %}"
-                               class="u-btn1 j-buy">免费下载</a></td>
+                            <img style="width: 100px" src="/static/image/qrcode_for_gh_f67b472a3435_258.jpg">
+                            <span style="color: red">注：如果下载失败，请关注公众号，联系小编</span>
+                        </td>
                     </tr>
-                    <tr>
-                        <td colspan="2"><span style="color: red">注：如果下载失败，请关注公众号，联系小编</span></td>
-                    </tr>
-
                     </tbody>
                 </table>
 
@@ -103,11 +120,16 @@
                         </li>
                         <li class="ui-switchable-trigger {% if page_type=='2' %} active {% endif %}">
                             <a href="/m/detail/2/{{ book_detail.book_title }}">
-                                评论
+                                评价
                                 <div class="arr"><b class="t0"></b><b class="t1"></b></div>
                             </a>
                         </li>
-
+                        <li class="ui-switchable-trigger {% if page_type=='3' %} active {% endif %}">
+                            <a href="/m/detail/3/{{ book_detail.book_title }}">
+                                更多信息
+                                <div class="arr"><b class="t0"></b><b class="t1"></b></div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="tabcnt ui-switchable-content">
@@ -121,7 +143,18 @@
 
                         </section>
 
+                        <section data-widget="app/view/folding" data-cnt=".j-toc" ,="" data-btn=".j-more-toc"
+                                 data-widget-cid="widget-5">
+                            <h3 class="u-ttl1">目录</h3>
+                            <article class="toc">
 
+
+                                {{ book_detail.book_catalogue|safe }}
+
+
+                            </article>
+
+                        </section>
                     </div>
                     <div class="m-commlist j-cnt ui-switchable-panel" {% if page_type=='2' %}
                          style="display:block" {% endif %} >

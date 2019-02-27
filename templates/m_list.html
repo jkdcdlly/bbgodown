@@ -22,7 +22,7 @@
     <script>
         window.onLoadImg = function (evt) {
             evt.style.display = 'block'
-        }
+        };
         try {
             var buyJump = localStorage.getItem('wap_reader_buying_jump');
             if (buyJump) {
@@ -37,7 +37,27 @@
 <div class="g-doc">
     <header class="g-hd">
 
-        {% include "m_div_header.html" %}
+        <div class="m-hd">
+            <ul class="m-pagenav f-cb">
+                <li class="itm u-back" id="goback" data-action-run="goBack" onclick="window.location.href='/m/'">
+                    <div class="icn-arrow icn-arrow-left">
+                        <span class="arrow0"></span>
+                        <span class="arrow1"></span>
+                    </div>
+                </li>
+                <li class="u-sep"><b></b></li>
+                <li class="itm"><h1>图书列表</h1></li>
+            </ul>
+            <div class="act f-cb">
+
+                <div class="m-quicknav" data-action-run="quickNav">
+                    <a href="javascript:void(0);" onclick="showquicknav()"><b class="icn-quicknav"></b></a>
+                </div>
+                <div class="m-search" data-action-run="searchBook">
+                    <a href="javascript:void(0);" class="search" onclick="showsearchBook()"><b class="u-icn-search"></b></a>
+                </div>
+            </div>
+        </div>
     </header>
     <div class="g-bd" id="body">
 

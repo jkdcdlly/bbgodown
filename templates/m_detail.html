@@ -120,7 +120,7 @@
                         </li>
                         <li class="ui-switchable-trigger {% if page_type=='2' %} active {% endif %}">
                             <a href="/m/detail/2/{{ book_detail.book_title }}">
-                                评价
+                                目录
                                 <div class="arr"><b class="t0"></b><b class="t1"></b></div>
                             </a>
                         </li>
@@ -143,18 +143,6 @@
 
                         </section>
 
-                        <section data-widget="app/view/folding" data-cnt=".j-toc" ,="" data-btn=".j-more-toc"
-                                 data-widget-cid="widget-5">
-                            <h3 class="u-ttl1">目录</h3>
-                            <article class="toc">
-
-
-                                {{ book_detail.book_catalogue|safe }}
-
-
-                            </article>
-
-                        </section>
                     </div>
                     <div class="m-commlist j-cnt ui-switchable-panel" {% if page_type=='2' %}
                          style="display:block" {% endif %} >

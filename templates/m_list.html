@@ -54,7 +54,7 @@
                     <a href="javascript:void(0);" onclick="showquicknav()"><b class="icn-quicknav"></b></a>
                 </div>
                 <div class="m-search" data-action-run="searchBook">
-                    <a href="javascript:void(0);" class="search" onclick="showsearchBook()"><b class="u-icn-search"></b></a>
+                    <a href="javascript:void(0);" class="search"><b class="u-icn-search" onclick="showsearchBook()"></b></a>
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
     </div>
     <!-- 搜索盖层 -->
     <div class="m-search-form" id="search-form" style="display:none" data-widget="app/view/search">
-        <a href="" class="close j-close"><b class="u-icn-close"></b></a>
+        <a href="javascript:void(0);" class="close j-close"><b class="u-icn-close" onclick="showsearchBook()"></b></a>
         <div class="form">
             <input class="j-search-input" type="text" placeholder="输入书名或作者…"/>
             <a href="/m/search/" class="u-icn-search2 j-search"></a>
